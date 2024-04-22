@@ -19,7 +19,7 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
   late TextEditingController amountReturnedController;
   late TextEditingController annualPeriodController;
   late String result;
-  bool showResult = false; // Declare and initialize showResult variable
+  bool showResultCard = false;
 
   @override
   void initState() {
@@ -50,7 +50,7 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
         Return of Investment (%): $returnOfInvestment
         Simple Annual Growth Rate per Year (%): $simpleAnnualGrowthRate
       ''';
-      showResult = true;
+      showResultCard = true;
     } else {
       result = '';
     }
@@ -80,15 +80,6 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
           },
         ),
         actions: [
-          TextButton(
-            onPressed: _resetForm,
-            child: Text(
-              'Clear',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
           IconButton(
             icon: Icon(
               Icons.history,
@@ -101,6 +92,24 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
                 MaterialPageRoute(builder: (context) => HistoryPage()),
               );
             },
+          ),
+          TextButton(
+            onPressed: () {
+              // Clear text controllers for input fields
+              investedAmountController.clear();
+              amountReturnedController.clear();
+              annualPeriodController.clear();
+
+              // Reset result and hide result card
+              setState(() {
+                result = '';
+                showResultCard = false;
+              });
+            },
+            child: Text(
+              'Reset',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ],
       ),
@@ -159,7 +168,7 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
                       Return of Investment (%): $returnOfInvestment
                       Simple Annual Growth Rate per Year (%): $simpleAnnualGrowthRate
                     ''';
-                    showResult = true;
+                    showResultCard = true;
                   });
 
                   InvestmentData data = InvestmentData(
@@ -175,8 +184,6 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
                   await DBHelper.insertInvestmentData(data);
                 },
                 style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(
-                      const Size(double.infinity, 50)),
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.green),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -185,46 +192,52 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
                     ),
                   ),
                 ),
-                child: const Text(
-                  'Calculate',
-                  style: TextStyle(color: Colors.white),
+                child: const SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(
+                      'Calculate',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white), // Text color
+                    ),
+                  ),
                 ),
               ),
             ),
             SizedBox(height: 20),
-            if (showResult)
-              SizedBox(
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20), // Add top padding
+            if (showResultCard) // Display result card only if showResult is true
+              FractionallySizedBox(
+                widthFactor: 0.9, // Adjust the width factor as needed
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child: Card(
-                    elevation: 4,
-                    shadowColor: Colors.black.withOpacity(0.5),
+                    elevation: 0, // Remove default card elevation
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Container(
+                    child: Padding(
                       padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: Offset(0, 3),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            result,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
+                          SizedBox(height: 8),
                         ],
-                      ),
-                      child: Text(
-                        result,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                        textAlign:
-                            TextAlign.left, // Ensure text alignment is left
                       ),
                     ),
                   ),
@@ -234,15 +247,5 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
         ),
       ),
     );
-  }
-
-  void _resetForm() {
-    setState(() {
-      investedAmountController.clear();
-      amountReturnedController.clear();
-      annualPeriodController.clear();
-      result = '';
-      showResult = false;
-    });
   }
 }

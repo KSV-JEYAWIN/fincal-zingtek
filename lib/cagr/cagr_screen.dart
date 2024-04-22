@@ -20,7 +20,7 @@ class _CAGRScreenState extends State<CAGRScreen> {
   double cagr = 0;
 
   final dbHelper = DatabaseHelper();
-  bool showResult = false;
+  bool showResult = false; // Flag to control the visibility of the result card
 
   @override
   void initState() {
@@ -31,6 +31,7 @@ class _CAGRScreenState extends State<CAGRScreen> {
       finalInvestmentController.text = widget.cagr!.finalInvestment.toString();
       durationController.text = widget.cagr!.duration.toString();
 
+      // Calculate CAGR when data is prefilled
       _calculateCAGR();
     }
   }
@@ -47,7 +48,7 @@ class _CAGRScreenState extends State<CAGRScreen> {
         cagr =
             (pow((finalInvestment / initialInvestment), (1 / duration)) - 1) *
                 100;
-        showResult = true;
+        showResult = true; // Show the result card when calculation is done
       });
     }
   }
@@ -61,6 +62,7 @@ class _CAGRScreenState extends State<CAGRScreen> {
 
     dbHelper.insertCAGR(CAGRModel(
       id: 0,
+      // Placeholder value for ID
       initialInvestment: initialInvestment,
       finalInvestment: finalInvestment,
       duration: duration,
@@ -91,12 +93,24 @@ class _CAGRScreenState extends State<CAGRScreen> {
         ),
         actions: [
           TextButton(
-            onPressed: _resetForm,
+            onPressed: () {
+              // Clear text controllers for input fields
+              initialInvestmentController.clear();
+              finalInvestmentController.clear();
+              durationController.clear();
+
+              // Reset showResult flag to hide the result card
+              setState(() {
+                showResult = false;
+              });
+            },
+            style: TextButton.styleFrom(
+              primary: Colors.white, // Text color
+              padding: EdgeInsets.all(8.0), // Padding around the button
+            ),
             child: Text(
-              'Clear',
-              style: TextStyle(
-                color: Colors.white,
-              ),
+              'Reset',
+              style: TextStyle(fontSize: 16), // Adjust the font size as needed
             ),
           ),
           IconButton(
@@ -126,6 +140,7 @@ class _CAGRScreenState extends State<CAGRScreen> {
                 labelText: 'Initial Investment',
                 border: OutlineInputBorder(),
               ),
+              //onChanged: (_) => _calculateCAGR(),
             ),
             const SizedBox(height: 10),
             TextField(
@@ -135,6 +150,7 @@ class _CAGRScreenState extends State<CAGRScreen> {
                 labelText: 'Final Investment',
                 border: OutlineInputBorder(),
               ),
+              //onChanged: (_) => _calculateCAGR(),
             ),
             const SizedBox(height: 10),
             TextField(
@@ -144,6 +160,7 @@ class _CAGRScreenState extends State<CAGRScreen> {
                 labelText: 'Duration of Investment (years)',
                 border: OutlineInputBorder(),
               ),
+              //onChanged: (_) => _calculateCAGR(),
             ),
             const SizedBox(height: 20),
             SizedBox(
@@ -152,6 +169,7 @@ class _CAGRScreenState extends State<CAGRScreen> {
                 onPressed: () {
                   _calculateCAGR();
                   _saveToDatabase();
+                  ; // Save data to the database
                 },
                 style: ButtonStyle(
                   backgroundColor:
@@ -162,57 +180,56 @@ class _CAGRScreenState extends State<CAGRScreen> {
                     ),
                   ),
                 ),
-                child: SizedBox(
+                child: const SizedBox(
                   width: double.infinity,
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.0),
                     child: Text(
                       'Calculate',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white), // Text color
                     ),
                   ),
                 ),
               ),
             ),
             if (showResult) ...[
+              const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20), // Add top padding
-                  child: Card(
-                    elevation: 4,
-                    shadowColor: Colors.black.withOpacity(0.5),
-                    shape: RoundedRectangleBorder(
+                child: Card(
+                  elevation: 4,
+                  // Add elevation to create a shadow
+                  shadowColor: Colors.black.withOpacity(0.3),
+                  // Set shadow color and opacity
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                     ),
-                    child: Container(
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: Offset(0, 3),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'CAGR: ${cagr.toStringAsFixed(2)}%',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'CAGR: ${cagr.toStringAsFixed(2)}%',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 8),
+                      ],
                     ),
                   ),
                 ),
@@ -222,15 +239,5 @@ class _CAGRScreenState extends State<CAGRScreen> {
         ),
       ),
     );
-  }
-
-  void _resetForm() {
-    setState(() {
-      initialInvestmentController.clear();
-      finalInvestmentController.clear();
-      durationController.clear();
-      cagr = 0;
-      showResult = false;
-    });
   }
 }

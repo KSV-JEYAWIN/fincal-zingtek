@@ -204,7 +204,7 @@ class CompoundGridScreen extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PercentageScreen(),
+            builder: (context) => const PercentageScreen(),
           ),
         );
         break;

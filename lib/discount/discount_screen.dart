@@ -24,6 +24,7 @@ class _DiscountScreenState extends State<DiscountScreen> {
   late TextEditingController discountController;
   double discountedPrice = 0;
   double amountSaved = 0;
+  bool showResult = false; // Set initial state to false
 
   final DiscountDatabaseHelper _databaseHelper = DiscountDatabaseHelper();
 
@@ -40,6 +41,8 @@ class _DiscountScreenState extends State<DiscountScreen> {
           widget.initialDiscount!.discountPercentage.toString();
       discountedPrice = widget.initialDiscountedPrice ?? 0;
       amountSaved = widget.initialAmountSaved ?? 0;
+
+      _calculate(); // Call calculate method to display result card
     }
   }
 
@@ -65,19 +68,11 @@ class _DiscountScreenState extends State<DiscountScreen> {
         actionsIconTheme: const IconThemeData(color: Colors.white),
         actions: [
           TextButton(
-            onPressed: () {
-              originalPriceController.clear();
-              discountController.clear();
-              setState(() {
-                discountedPrice = 0;
-                amountSaved = 0;
-              });
-            },
+            onPressed: _resetForm,
             style: TextButton.styleFrom(
               foregroundColor: Colors.green,
               shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(10), // Adjust the radius as needed
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
             child: const Text(
@@ -92,17 +87,7 @@ class _DiscountScreenState extends State<DiscountScreen> {
               Icons.history,
               size: 30,
             ),
-            onPressed: () async {
-              final List<Discount> discounts =
-                  await _databaseHelper.getDiscountHistory();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      DiscountHistoryScreen(discounts: discounts),
-                ),
-              );
-            },
+            onPressed: () => _showHistory(context),
           ),
         ],
       ),
@@ -114,6 +99,9 @@ class _DiscountScreenState extends State<DiscountScreen> {
               TextField(
                 controller: originalPriceController,
                 keyboardType: TextInputType.number,
+                style: const TextStyle(
+                  fontSize: 18, // Increase font size
+                ),
                 decoration: InputDecoration(
                   labelText: 'Original Price',
                   border: OutlineInputBorder(),
@@ -123,6 +111,9 @@ class _DiscountScreenState extends State<DiscountScreen> {
               TextField(
                 controller: discountController,
                 keyboardType: TextInputType.number,
+                style: const TextStyle(
+                  fontSize: 18, // Increase font size
+                ),
                 decoration: InputDecoration(
                   labelText: 'Discount Percentage',
                   border: OutlineInputBorder(),
@@ -130,66 +121,120 @@ class _DiscountScreenState extends State<DiscountScreen> {
               ),
               const SizedBox(height: 20),
               SizedBox(
-                width: double.infinity, // Set width to fit screen
+                width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () async {
-                    double originalPrice =
-                        double.tryParse(originalPriceController.text) ?? 0;
-                    double discountPercentage =
-                        double.tryParse(discountController.text) ?? 0;
-
-                    discountedPrice = originalPrice -
-                        (originalPrice * discountPercentage / 100);
-                    amountSaved = originalPrice - discountedPrice;
-
-                    DateTime dateTime = DateTime.now();
-
-                    final discount = Discount(
-                      originalPrice: originalPrice,
-                      discountPercentage: discountPercentage,
-                      discountedPrice: discountedPrice,
-                      amountSaved: amountSaved,
-                      dateTime: dateTime,
-                    );
-                    await _databaseHelper.insertDiscount(discount);
-
-                    setState(() {});
-                  },
+                  onPressed: _calculate,
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.green,
-                    // Text color
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          10), // Adjust the radius as needed
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                   child: const Text('Calculate'),
                 ),
               ),
-              if (discountedPrice != 0.0)
-                Card(
-                  margin: const EdgeInsets.only(top: 20.0),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Discounted Price: ${discountedPrice.toStringAsFixed(2)}',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'Amount Saved: ${amountSaved.toStringAsFixed(2)}',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+              if (showResult) // Display result card only if showResult is true
+                FractionallySizedBox(
+                  widthFactor: 0.9, // Adjust the width factor as needed
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3), // changes position of shadow
                         ),
                       ],
+                    ),
+                    child: Card(
+                      elevation: 0, // Remove default card elevation
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Discounted Price: ${discountedPrice.toStringAsFixed(2)}',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'Amount Saved: ${amountSaved.toStringAsFixed(2)}',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _resetForm() {
+    originalPriceController.clear();
+    discountController.clear();
+    setState(() {
+      showResult = false; // Reset showResult to false
+      discountedPrice = 0;
+      amountSaved = 0;
+    });
+  }
+
+  void _calculate() {
+    try {
+      double originalPrice = double.tryParse(originalPriceController.text) ?? 0;
+      double discountPercentage = double.tryParse(discountController.text) ?? 0;
+
+      discountedPrice =
+          originalPrice - (originalPrice * discountPercentage / 100);
+      amountSaved = originalPrice - discountedPrice;
+
+      setState(() {
+        showResult = true; // Set showResult to true to display the result card
+      });
+
+      // Insert data into the database only if it's not pre-filled
+      if (widget.initialDiscount == null) {
+        DateTime dateTime = DateTime.now();
+        final discount = Discount(
+          originalPrice: originalPrice,
+          discountPercentage: discountPercentage,
+          discountedPrice: discountedPrice,
+          amountSaved: amountSaved,
+          dateTime: dateTime,
+        );
+        _insertDiscount(discount);
+      }
+    } catch (e) {
+      print('Error calculating discount: $e');
+      // Optionally show a snackbar or dialog to inform the user about the error
+    }
+  }
+
+  void _insertDiscount(Discount discount) async {
+    await _databaseHelper.insertDiscount(discount);
+  }
+
+  void _showHistory(BuildContext context) async {
+    final List<Discount> discounts = await _databaseHelper.getDiscountHistory();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DiscountHistoryScreen(discounts: discounts),
       ),
     );
   }

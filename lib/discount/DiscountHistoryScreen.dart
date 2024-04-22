@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'discountmodel.dart';
 import 'package:fincal/discount/discount_screen.dart'; // Import DiscountScreen
+import 'package:fincal/discount/discountHelper.dart'; // Import DiscountDatabaseHelper
 
 class DiscountHistoryScreen extends StatefulWidget {
   final List<Discount> discounts;
@@ -15,6 +16,7 @@ class DiscountHistoryScreen extends StatefulWidget {
 
 class _DiscountHistoryScreenState extends State<DiscountHistoryScreen> {
   Set<int> _selectedIndices = Set<int>();
+  bool _selectAll = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,19 +25,31 @@ class _DiscountHistoryScreenState extends State<DiscountHistoryScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: Text(
-          'Discount History',
-          style: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
-        ),
+        title: _selectedIndices.isNotEmpty
+            ? Text('Selected: ${_selectedIndices.length}',
+                style: TextStyle(color: Colors.white))
+            : Text('Discount History', style: TextStyle(color: Colors.white)),
+        iconTheme: IconThemeData(color: Colors.white),
+        // Set icon color to white
         actions: <Widget>[
-          IconButton(
-            onPressed: _selectAllItems,
-            icon: Icon(Icons.select_all),
-          ),
-          IconButton(
-            onPressed: () => _deleteSelectedItems(context),
-            icon: Icon(Icons.delete),
-          ),
+          if (_selectedIndices.isNotEmpty)
+            IconButton(
+              onPressed: () => _deleteSelectedItems(context),
+              icon: Icon(Icons.delete),
+              color: Colors.white, // Set icon color to white
+            ),
+          if (_selectedIndices.isNotEmpty)
+            IconButton(
+              onPressed: _clearSelection,
+              icon: Icon(Icons.cancel),
+              color: Colors.white, // Set icon color to white
+            ),
+          if (_selectedIndices.isEmpty)
+            IconButton(
+              onPressed: _toggleSelectAll,
+              icon: Icon(_selectAll ? Icons.select_all : Icons.select_all),
+              color: Colors.white, // Set icon color to white
+            ),
         ],
       ),
       body: SingleChildScrollView(
@@ -132,18 +146,6 @@ class _DiscountHistoryScreenState extends State<DiscountHistoryScreen> {
                                   color:
                                       isDarkMode ? Colors.white : Colors.black),
                             ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Discounted Price : ${discount.discountedPrice}\nAmount Saved : ${discount.amountSaved}',
-                                  style: TextStyle(
-                                      color: isDarkMode
-                                          ? Colors.white
-                                          : Colors.black),
-                                ),
-                              ],
-                            ),
                             trailing: Icon(Icons.arrow_forward_ios),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 16.0, vertical: 8.0),
@@ -161,14 +163,15 @@ class _DiscountHistoryScreenState extends State<DiscountHistoryScreen> {
     );
   }
 
-  void _selectAllItems() {
+  void _toggleSelectAll() {
     setState(() {
-      if (_selectedIndices.length == widget.discounts.length) {
+      if (_selectAll) {
         _selectedIndices.clear();
       } else {
         _selectedIndices = Set<int>.from(
             Iterable<int>.generate(widget.discounts.length, (i) => i));
       }
+      _selectAll = !_selectAll;
     });
   }
 
@@ -179,6 +182,12 @@ class _DiscountHistoryScreenState extends State<DiscountHistoryScreen> {
       } else {
         _selectedIndices.add(index);
       }
+    });
+  }
+
+  void _clearSelection() {
+    setState(() {
+      _selectedIndices.clear();
     });
   }
 
@@ -202,12 +211,12 @@ class _DiscountHistoryScreenState extends State<DiscountHistoryScreen> {
     );
 
     if (confirmed == true) {
-      // Delete selected items from the database
-      // Implement your deletion logic here
       final List<Discount> selectedDiscounts =
           _selectedIndices.map((index) => widget.discounts[index]).toList();
-      // Your database deletion logic
-      // After deletion, update UI and clear selection
+      final dbHelper = DiscountDatabaseHelper();
+      for (var discount in selectedDiscounts) {
+        await dbHelper.deleteDiscount(discount.id!); // Assuming id is not null
+      }
       setState(() {
         widget.discounts
             .removeWhere((discount) => selectedDiscounts.contains(discount));

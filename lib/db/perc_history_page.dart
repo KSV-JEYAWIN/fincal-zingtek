@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dbhelper.dart';
 import 'percentage_screen.dart';
+import 'package:intl/intl.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -29,11 +30,9 @@ class _HistoryPageState extends State<HistoryPage> {
           await databaseHelper.queryLatestIncordecRows(limit: 100);
 
       setState(() {
-        // Combine and sort the lists
         history = [...percentagesList, ...incordecList];
         history.sort((a, b) => b['datetime'].compareTo(a['datetime']));
 
-        // Trim the list to only the latest 100 items
         if (history.length > 100) {
           history = history.sublist(0, 100);
         }
@@ -72,48 +71,113 @@ class _HistoryPageState extends State<HistoryPage> {
                         Map<String, dynamic> item = history[index];
                         return GestureDetector(
                           onTap: () {
-                            // Determine the default option based on the item title
-                            String defaultOption =
-                                item['title'] == 'Increase / Decrease'
-                                    ? 'increase_decrease'
-                                    : item['title']
-                                        .toString()
-                                        .toLowerCase()
-                                        .replaceAll(' ', '_');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PercentageScreen(
-                                  selectedOption: defaultOption,
-                                  fromValue: item['x'],
-                                  toValue: item['y'],
-                                  result: item['value'],
+                            navigateToPercentageScreen(item);
+                          },
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Card(
+                                  color: Colors.green,
+                                  elevation: 4,
+                                  child: Container(
+                                    height: 100,
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          '${_formattedDate(item['datetime'])[0]}\n${_formattedDate(item['datetime'])[1]}\n${_formattedDate(item['datetime'])[2]}',
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                            color: Colors.white,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
-                            );
-                          },
-                          child: Card(
-                            color: index % 2 == 0
-                                ? Colors.blueGrey[100]
-                                : Colors.white,
-                            elevation: 2,
-                            margin: EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 16),
-                            child: ListTile(
-                              title:
-                                  Text(item['title'] ?? 'Increase / Decrease'),
-                              subtitle: Text(
-                                'X: ${item['x']}\n'
-                                'Y: ${item['y']}\n'
-                                'Result: ${item['value']}\n'
-                                'Increased Value: ${item['increasedValue'] ?? 'N/A'}\n'
-                                'Decreased Value: ${item['decreasedValue'] ?? 'N/A'}',
+                              SizedBox(width: 8.0),
+                              Expanded(
+                                flex: 3,
+                                child: ListTile(
+                                  title: Text(
+                                    'X: ${item['x']}\nY : ${item['y']}',
+                                    style: TextStyle(
+                                      color: Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black,
+                                    ),
+                                  ),
+                                  subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      if (item.containsKey('value'))
+                                        Text('Result: ${item['value']}'),
+                                      if (item.containsKey('increasedValue'))
+                                        Text(
+                                            'Increased Value: ${item['increasedValue']}'),
+                                      if (item.containsKey('decreasedValue'))
+                                        Text(
+                                            'Decreased Value: ${item['decreasedValue']}'),
+                                      Text(
+                                        ' ${item['title']}',
+                                        style: TextStyle(
+                                          fontWeight:
+                                              FontWeight.bold, // Make it bold
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  trailing: Icon(Icons.arrow_forward_ios),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 8.0),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         );
                       },
                     ),
     );
+  }
+
+  void navigateToPercentageScreen(Map<String, dynamic> item) {
+    print('Item: $item');
+    print('Title: ${item['title']}');
+    print('X: ${item['x']}');
+    print('Y: ${item['y']}');
+    print('Increased Value: ${item['increasedValue']}');
+    print('Decreased Value: ${item['decreasedValue']}');
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PercentageScreen(
+          selectedOption: item['title'],
+          fromValue: item['x'],
+          toValue: item['y'],
+          increasedValue: item['increasedValue'] != null
+              ? item['increasedValue'].toDouble()
+              : null,
+          decreasedValue: item['decreasedValue'] != null
+              ? item['decreasedValue'].toDouble()
+              : null,
+        ),
+      ),
+    );
+  }
+
+  List<String> _formattedDate(String datetime) {
+    final parsedDate = DateTime.parse(datetime);
+    final month = DateFormat('MMM').format(parsedDate);
+    final day = DateFormat('dd').format(parsedDate);
+    final year = DateFormat('yyyy').format(parsedDate);
+    return [month, day, year];
   }
 }

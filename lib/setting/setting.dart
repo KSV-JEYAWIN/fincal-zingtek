@@ -34,13 +34,6 @@ class SettingsPage extends StatelessWidget {
                 ),
                 _buildSettingsItem(
                   context,
-                  'Currency Selection',
-                  'Choose your default currency',
-                  CurrencySelectionPage(),
-                  Icons.attach_money,
-                ),
-                _buildSettingsItem(
-                  context,
                   'Feedback',
                   'Give us your feedback',
                   FeedbackPage(),

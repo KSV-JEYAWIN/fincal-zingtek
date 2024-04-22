@@ -39,7 +39,11 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
     compoundFrequencyValue = widget.compoundFrequency ?? 'Monthly';
 
     // Calculate compound interest when the screen is initialized with data from DB
-    _calculateCompoundInterest();
+    if (widget.principal != null &&
+        widget.rate != null &&
+        widget.time != null) {
+      _calculateCompoundInterest(); // Calculate compound interest
+    }
   }
 
   double calculateCompoundInterest(
@@ -287,11 +291,38 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
                 child: const Text('Calculate'),
               ),
               if (resultText != null)
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      resultText!,
+                FractionallySizedBox(
+                  widthFactor: 0.9, // Adjust the width factor as needed
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Card(
+                      elevation: 0, // Remove default card elevation
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              resultText!,
+                            ),
+                            SizedBox(height: 8),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),

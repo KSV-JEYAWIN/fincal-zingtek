@@ -34,7 +34,8 @@ class _HistoryPageState extends State<HistoryPage> {
       appBar: AppBar(
         backgroundColor: Colors.green,
         title: _isSelecting
-            ? Text('Selected ${_selectedItemCount()}')
+            ? Text('Selected ${_selectedItemCount()}',
+                style: TextStyle(color: Colors.white))
             : Text(
                 'VAT Data History',
                 style: TextStyle(color: Colors.white),
@@ -75,6 +76,9 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   // Function to build history list item
+  // Function to build history list item
+  // Function to build history list item
+  // Function to build history list item
   Widget buildHistoryListItem(VATData vatData, bool isDarkMode) {
     return Row(
       children: [
@@ -88,7 +92,8 @@ class _HistoryPageState extends State<HistoryPage> {
         Expanded(
           flex: 1,
           child: Card(
-            color: Colors.green,
+            color: vatData.isSelected ?? false ? Colors.grey : Colors.green,
+            // Set color to grey if selected, otherwise green
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -128,21 +133,6 @@ class _HistoryPageState extends State<HistoryPage> {
             title: Text(
               'Net Price: ${vatData.netPrice}\n VAT Percentage : ${vatData.vatPercentage}',
               style: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'VAT Amount : ${vatData.vatAmount}',
-                  style: TextStyle(
-                      color: isDarkMode ? Colors.white : Colors.black),
-                ),
-                Text(
-                  'Total Price : ${vatData.totalPrice}',
-                  style: TextStyle(
-                      color: isDarkMode ? Colors.white : Colors.black),
-                ),
-              ],
             ),
             trailing: Icon(Icons.arrow_forward_ios),
             contentPadding:

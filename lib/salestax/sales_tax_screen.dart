@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fincal/salestax/salestaxModel.dart';
 import 'package:fincal/salestax/salestaxHelper.dart';
-import 'satHistory.dart';
+import 'package:fincal/salestax/satHistory.dart'; // Import HistoryPage
 
 class SalesTaxScreen extends StatefulWidget {
   final SalesTax? salesTax;
@@ -63,7 +63,9 @@ class _SalesTaxScreenState extends State<SalesTaxScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HistoryPage()),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        HistoryPage()), // Use HistoryPage here
               );
             },
           ),

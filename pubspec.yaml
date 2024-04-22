@@ -20,6 +20,11 @@ dependencies:
   sqflite: ^2.0.0+3
   flutter_svg: ^2.0.10+1
   shared_preferences: ^2.2.2
+  google_mobile_ads: ^5.0.0
+  firebase_admob: ^0.11.0+1
+  firebase_core: ^2.30.0
+
+
 
 
 

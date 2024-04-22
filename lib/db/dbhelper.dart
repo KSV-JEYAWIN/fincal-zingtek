@@ -33,6 +33,7 @@ class DatabaseHelper {
     await db.execute('''
     CREATE TABLE incordec(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT,
       x INTEGER,
       y INTEGER,
       increasedValue REAL,
@@ -58,12 +59,30 @@ class DatabaseHelper {
     return await db.query(
       tableName,
       orderBy: 'datetime DESC',
-      limit: 100,
+      limit: limit,
     );
   }
 
   Future<List<Map<String, dynamic>>> queryLatestIncordecRows(
       {required int limit}) async {
     return await queryLatestRows(tableName: 'incordec', limit: limit);
+  }
+
+  Future<Map<String, dynamic>?> getIncDecData({
+    required String title,
+    required int xValue,
+    required int yValue,
+  }) async {
+    Database db = await instance.database;
+    List<Map<String, dynamic>> results = await db.query(
+      'incordec',
+      where: 'title = ? AND x = ? AND y = ?',
+      whereArgs: [title, xValue, yValue],
+    );
+    if (results.isNotEmpty) {
+      return results.first;
+    } else {
+      return null;
+    }
   }
 }
