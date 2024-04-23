@@ -1,4 +1,4 @@
-# fincal
+# financial
 
 A new Flutter project.
 

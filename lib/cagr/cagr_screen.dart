@@ -105,7 +105,7 @@ class _CAGRScreenState extends State<CAGRScreen> {
               });
             },
             style: TextButton.styleFrom(
-              primary: Colors.white, // Text color
+              //primary: Colors.white, // Text color
               padding: EdgeInsets.all(8.0), // Padding around the button
             ),
             child: Text(

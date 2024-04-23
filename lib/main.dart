@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:fincal/setting/theme/themeprovider.dart';
 import 'compound_grid_screen.dart'; // Import your main screen here
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
+
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
@@ -65,20 +69,24 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       backgroundColor: Colors.white, // Set your desired background color
       body: Center(
-        child: AnimatedBuilder(
-          animation: _animation,
-          builder: (context, child) {
-            return Transform.scale(
-              scale: _animation.value,
-              child: child,
-            );
-          },
-          child: Image.asset(
-            'assets/image/homelogo.png',
-            // Replace with your home logo image asset
-            width: 1000,
-            height: 1000,
-          ),
+        child: Stack(
+          children: [
+            AnimatedBuilder(
+              animation: _animation,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: _animation.value,
+                  child: child,
+                );
+              },
+              child: Image.asset(
+                'assets/image/homelogo.png',
+                // Replace with your home logo image asset
+                width: 1000,
+                height: 1000,
+              ),
+            ),
+          ],
         ),
       ),
     );

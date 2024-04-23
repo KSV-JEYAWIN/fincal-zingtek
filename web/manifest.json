@@ -1,6 +1,6 @@
 {
-    "name": "fincal",
-    "short_name": "fincal",
+    "name": "financial",
+    "short_name": "financial",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fincal/setting/setting.dart';
 import 'package:fincal/profitMargin/profit_margin_screen.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'cagr/cagr_screen.dart';
 import 'ci/compound_interest_screen.dart';
 import 'discount/discount_screen.dart';
@@ -11,7 +12,17 @@ import 'tip_calculator/tip_screen.dart';
 import 'vat/vat_screen.dart';
 import 'salestax/sales_tax_screen.dart';
 
-class CompoundGridScreen extends StatelessWidget {
+class CompoundGridScreen extends StatefulWidget {
+  CompoundGridScreen({Key? key}) : super(key: key);
+
+  @override
+  _CompoundGridScreenState createState() => _CompoundGridScreenState();
+}
+
+class _CompoundGridScreenState extends State<CompoundGridScreen> {
+  BannerAd? _bannerAd;
+  bool _isLoaded = false;
+
   final List<Map<String, dynamic>> compounds = [
     {
       'name': 'Percentage',
@@ -75,7 +86,45 @@ class CompoundGridScreen extends StatelessWidget {
     },
   ];
 
-  CompoundGridScreen({Key? key}) : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the ad
+    _bannerAd = BannerAd(
+      adUnitId:
+          'ca-app-pub-3940256099942544/6300978111', // Replace with your actual ad unit ID
+      size: AdSize.banner,
+      request: AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _isLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+        },
+        onAdOpened: (ad) {
+          // Called when an ad opens an overlay that covers the screen.
+          // You can add your logic here if needed.
+          print('Ad opened: ${ad.adUnitId}');
+        },
+        onAdClosed: (ad) {
+          // Called when an ad removes an overlay that covers the screen.
+          // You can add your logic here if needed.
+          print('Ad closed: ${ad.adUnitId}');
+        },
+        onAdImpression: (ad) {
+          // Called when an impression occurs on the ad.
+          // You can add your logic here if needed.
+          print('Ad impression: ${ad.adUnitId}');
+        },
+      ),
+    );
+
+    // Load the ad
+    _bannerAd!.load();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +181,14 @@ class CompoundGridScreen extends StatelessWidget {
                 ),
               ),
             ),
+            if (_isLoaded) ...[
+              SizedBox(height: 10), // Adjust as needed
+              Container(
+                height: _bannerAd?.size.height.toDouble(),
+                alignment: Alignment.center,
+                child: AdWidget(ad: _bannerAd!),
+              ),
+            ],
           ],
         ),
       ),
@@ -284,5 +341,11 @@ class CompoundGridScreen extends StatelessWidget {
         // Handle navigation to other screens
         break;
     }
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose(); // Dispose the ad when the screen is disposed
+    super.dispose();
   }
 }
