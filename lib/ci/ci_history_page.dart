@@ -193,7 +193,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      DateFormat('MMM \n dd yyyy')
+                                      DateFormat('MMM \n dd\n yyyy')
                                           .format(parsedDateTime),
                                       style: TextStyle(
                                         color: Colors.white,

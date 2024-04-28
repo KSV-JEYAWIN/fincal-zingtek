@@ -118,10 +118,11 @@ class _HistoryPageState extends State<HistoryPage> {
                                     '${_formattedDate(dateTime)[0]} \n ${_formattedDate(dateTime)[1]} \n ${_formattedDate(dateTime)[2]}',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 24.0,
+                                      fontSize: 18.0,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
+
                                 ),
                               ],
                             ),

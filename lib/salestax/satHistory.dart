@@ -193,6 +193,7 @@ class _HistoryPageState extends State<HistoryPage> {
             icon: Icon(Icons.select_all),
             onPressed: null, // Disable regular tap
             tooltip: 'Select All',
+            color: Colors.white,
           ),
         ),
       ];

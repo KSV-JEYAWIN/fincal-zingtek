@@ -97,7 +97,7 @@ class SettingsPage extends StatelessWidget {
             Icon(
               iconData,
               size: 32.0,
-              color: Colors.blueAccent,
+              color: Colors.green,
             ),
             SizedBox(width: 16.0),
             Column(

@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'compound_interest_screen.dart'; // The CompoundInterest class import
+// The CompoundInterest class import
 
 class DatabaseHelper {
   static Database? _database;

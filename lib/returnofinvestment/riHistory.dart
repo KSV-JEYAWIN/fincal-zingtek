@@ -27,6 +27,12 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,color: Colors.white),
+          onPressed: (){
+            Navigator.pop(context);
+          },
+        ),
         title: _selectedInvestments.isNotEmpty
             ? Text(
                 'Selected item : ${_selectedInvestments.length} ',
@@ -75,11 +81,11 @@ class _HistoryPageState extends State<HistoryPage> {
               separatorBuilder: (context, index) => Divider(),
               itemBuilder: (context, index) {
                 InvestmentData data = investmentDataList[index];
-                Color? cardColor = _selectedInvestments.contains(data)
-                    ? null
-                    : index.isEven
-                        ? Colors.grey[200]
-                        : Colors.grey[100];
+                // Color? cardColor = _selectedInvestments.contains(data)
+                //     ? null
+                //     : index.isEven
+                //         ? Colors.grey[200]
+                //         : Colors.grey[100];
                 return GestureDetector(
                   onLongPress: () {
                     setState(() {
@@ -105,8 +111,8 @@ class _HistoryPageState extends State<HistoryPage> {
                     }
                   },
                   child: Container(
-                    color: cardColor,
-                    height: 210, // Adjust the height as needed
+                    //color: cardColor,
+                    height: 130, // Adjust the height as needed
                     child: Row(
                       children: [
                         if (_selectedInvestments.isNotEmpty)
@@ -123,7 +129,7 @@ class _HistoryPageState extends State<HistoryPage> {
                           flex: 1,
                           child: Card(
                             color: _selectedInvestments.contains(data)
-                                ? Colors.transparent
+                                ? Colors.grey
                                 : Colors.green,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -135,9 +141,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     '${_formattedDate(data.dateTime)[0]}',
                                     // Month
                                     style: TextStyle(
-                                      color: isDarkMode
-                                          ? Colors.white
-                                          : Colors.black,
+                                      color: Colors.white,
                                       fontSize: 18.0,
                                     ),
                                   ),
@@ -145,9 +149,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     '${_formattedDate(data.dateTime)[1]}',
                                     // Day
                                     style: TextStyle(
-                                      color: isDarkMode
-                                          ? Colors.white
-                                          : Colors.black,
+                                      color: Colors.white,
                                       fontSize: 18.0,
                                     ),
                                   ),
@@ -155,9 +157,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     '${_formattedDate(data.dateTime)[2]}',
                                     // Year
                                     style: TextStyle(
-                                      color: isDarkMode
-                                          ? Colors.white
-                                          : Colors.black,
+                                      color: Colors.white,
                                       fontSize: 18.0,
                                     ),
                                   ),
@@ -173,21 +173,14 @@ class _HistoryPageState extends State<HistoryPage> {
                             title: Text(
                               'Invested Amount: ${data.investedAmount}\nAmount Returned : ${data.amountReturned}\nAnnual Period : ${data.annualPeriod}',
                               style: TextStyle(
-                                  color:
-                                      isDarkMode ? Colors.white : Colors.black),
+                                color: Theme.of(context).brightness ==
+                                    Brightness.dark
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
                             ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Total Gain of Investment : ${data.totalGain}\nReturn of Investment : ${data.returnOfInvestment}\nPer Year % : ${data.simpleAnnualGrowthRate}',
-                                  style: TextStyle(
-                                      color: isDarkMode
-                                          ? Colors.white
-                                          : Colors.black),
-                                ),
-                              ],
-                            ),
+                            trailing: Icon(Icons.arrow_forward_ios),
+
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 16.0, vertical: 8.0),
                           ),

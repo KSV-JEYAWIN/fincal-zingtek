@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 5), // 5 seconds duration
+      duration: Duration(seconds: 2), // 5 seconds duration
     );
     _animation = CurvedAnimation(
       parent: _controller,

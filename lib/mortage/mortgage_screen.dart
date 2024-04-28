@@ -98,7 +98,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
           TextButton(
             onPressed: _resetForm,
             child: Text(
-              'Clear',
+              'Reset',
               style: TextStyle(
                 color: Colors.white,
               ),

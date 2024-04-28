@@ -80,19 +80,7 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
           },
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.history,
-              color: Colors.white,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HistoryPage()),
-              );
-            },
-          ),
+
           TextButton(
             onPressed: () {
               // Clear text controllers for input fields
@@ -110,6 +98,19 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
               'Reset',
               style: TextStyle(color: Colors.white),
             ),
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.history,
+              color: Colors.white,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HistoryPage()),
+              );
+            },
           ),
         ],
       ),

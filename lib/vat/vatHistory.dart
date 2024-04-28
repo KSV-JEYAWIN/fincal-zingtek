@@ -154,7 +154,7 @@ class _HistoryPageState extends State<HistoryPage> {
   // Function to toggle selection of an item
   void _toggleSelection(VATData vatData) {
     setState(() {
-      vatData.isSelected = !vatData.isSelected!;
+      vatData.isSelected = !vatData.isSelected;
     });
   }
 
@@ -194,7 +194,8 @@ class _HistoryPageState extends State<HistoryPage> {
           },
           child: IconButton(
             icon: Icon(Icons.select_all),
-            onPressed: null, // Disable regular tap
+            onPressed: null,
+            color: Colors.white,// Disable regular tap
             tooltip: 'Select All',
           ),
         ),

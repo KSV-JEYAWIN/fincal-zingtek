@@ -90,12 +90,13 @@ class _HistoryPageState extends State<HistoryPage> {
         actions: _selectedIndices.isNotEmpty
             ? [
                 IconButton(
-                  icon: Icon(Icons.cancel),
-                  onPressed: _resetSelection,
-                ),
-                IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: _deleteSelectedItems,
+
+                ),
+                IconButton(
+                  icon: Icon(Icons.cancel),
+                  onPressed: _resetSelection,
                 ),
               ]
             : [
@@ -149,9 +150,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     '${_formattedDate(data.dateTime)[0]}',
                                     // Month
                                     style: TextStyle(
-                                      color: isSelected
-                                          ? Colors.white
-                                          : Colors.black,
+                                      color: Colors.white,
                                       fontSize: 18.0,
                                     ),
                                   ),
@@ -159,9 +158,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     '${_formattedDate(data.dateTime)[1]}',
                                     // Day
                                     style: TextStyle(
-                                      color: isSelected
-                                          ? Colors.white
-                                          : Colors.black,
+                                      color: Colors.white,
                                       fontSize: 18.0,
                                     ),
                                   ),
@@ -169,9 +166,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     '${_formattedDate(data.dateTime)[2]}',
                                     // Year
                                     style: TextStyle(
-                                      color: isSelected
-                                          ? Colors.white
-                                          : Colors.black,
+                                      color: Colors.white,
                                       fontSize: 18.0,
                                     ),
                                   ),
@@ -188,8 +183,11 @@ class _HistoryPageState extends State<HistoryPage> {
                           title: Text(
                             'Loan Amount : ${data.loanAmount}\nInterest Rate : ${data.interestRate}\nLoan Duration : ${data.loanDuration}',
                             style: TextStyle(
-                              color: isSelected ? Colors.white : Colors.black,
-                            ),
+                              color: Theme.of(context).brightness ==
+                                  Brightness.dark
+                                  ? Colors.white
+                                  : Colors.black,
+                            )
                           ),
                           trailing: Icon(Icons.arrow_forward_ios),
                           contentPadding: EdgeInsets.symmetric(

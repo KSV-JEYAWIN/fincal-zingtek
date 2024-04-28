@@ -128,6 +128,7 @@ class _CompoundGridScreenState extends State<CompoundGridScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
@@ -164,52 +165,54 @@ class _CompoundGridScreenState extends State<CompoundGridScreen> {
           ],
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 3,
-                crossAxisSpacing: 3.0,
-                mainAxisSpacing: 35.0,
-                children: List.generate(
-                  compounds.length,
-                  (index) => _buildContainer(context, compounds[index]),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: isDarkMode
+                ? [Colors.black, Colors.grey]
+                : [Colors.white, Colors.white],
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 3.0,
+                  mainAxisSpacing: 35.0,
+                  children: List.generate(
+                    compounds.length,
+                    (index) => _buildContainer(context, compounds[index]),
+                  ),
                 ),
               ),
-            ),
-            if (_isLoaded) ...[
-              SizedBox(height: 10), // Adjust as needed
-              Container(
-                height: _bannerAd?.size.height.toDouble(),
-                alignment: Alignment.center,
-                child: AdWidget(ad: _bannerAd!),
-              ),
+              if (_isLoaded) ...[
+                SizedBox(height: 10), // Adjust as needed
+                Container(
+                  height: _bannerAd?.size.height.toDouble(),
+                  alignment: Alignment.center,
+                  child: AdWidget(ad: _bannerAd!),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildContainer(BuildContext context, Map<String, dynamic> compound) {
-    String name = compound['name'];
-    // Splitting compound name into words
-    List<String> words = name.split(' ');
-
-    // First word of the compound name
-    String firstWord = words[0];
-
-    // Remaining words joined as a string
-    String remainingWords = words.sublist(1).join(' ');
+    final firstWord = compound['name'].split(' ')[0];
+    final remainingWords = compound['name'].split(' ').sublist(1).join(' ');
 
     return InkWell(
-      onTap: () {
-        _navigateToScreen(context, name);
-      },
+      onTap: () => _navigateToScreen(context, compound['name']),
       child: Container(
         height: 100,
         width: 100,
@@ -261,7 +264,11 @@ class _CompoundGridScreenState extends State<CompoundGridScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PercentageScreen(),
+            builder: (context) => PercentageScreen(
+              selectedOption: 'Default',
+              fromValue: 0,
+              toValue: 0,
+            ),
           ),
         );
         break;

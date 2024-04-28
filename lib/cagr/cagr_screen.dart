@@ -110,7 +110,8 @@ class _CAGRScreenState extends State<CAGRScreen> {
             ),
             child: Text(
               'Reset',
-              style: TextStyle(fontSize: 16), // Adjust the font size as needed
+              style: TextStyle(fontSize: 16,color: Colors.white),
+              // Adjust the font size as needed
             ),
           ),
           IconButton(

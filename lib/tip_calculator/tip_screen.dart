@@ -61,7 +61,7 @@ class _TipScreenState extends State<TipScreen> {
           TextButton(
             onPressed: _resetForm,
             child: Text(
-              'Clear',
+              'Reset',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,

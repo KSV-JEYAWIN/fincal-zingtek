@@ -94,7 +94,7 @@ class _ProfitMarginScreenState extends State<ProfitMarginScreen> {
           TextButton(
             onPressed: _resetForm,
             child: Text(
-              'Clear',
+              'Reset',
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -156,27 +156,25 @@ class _ProfitMarginScreenState extends State<ProfitMarginScreen> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  _saveToDatabase();
-                  setState(() {
-                    showResult = true;
-                  });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Data saved to database')),
-                  );
-                },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12.0),
-                  child: Text('Calculate'),
-                ),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.green,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+              onPressed: () {
+                _saveToDatabase();
+                setState(() {
+                  showResult = true;
+                });
+
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 12.0),
+                child: Text('Calculate'),
+              ),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.green,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
+            ),
             ),
             const SizedBox(height: 20),
             Visibility(
