@@ -195,16 +195,17 @@ class _HistoryPageState extends State<HistoryPage> {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(
+                          item["title"],
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         if (item.containsKey("value"))
                           Text('Result: ${item["value"]}'),
                         if (item.containsKey("increasedValue"))
                           Text('Increased Value: ${item["increasedValue"]}'),
                         if (item.containsKey("decreasedValue"))
                           Text('Decreased Value: ${item["decreasedValue"]}'),
-                        Text(
-                          item["title"],
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
+
                       ],
                     ),
                   ),
@@ -218,11 +219,13 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   void navigateToPercentageScreen(Map<String, dynamic> item) {
+    print(item);
+
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => PercentageScreen(
-          selectedOption: item["title"], // Pass the title for the radio button
+          selectedOption:item["title"], // Pass the title for the radio button
           fromValue: item["x"],          // Pass the X value
           toValue: item["y"],            // Pass the Y value
           result: item.containsKey("value") ? item["value"].toDouble() : null,

@@ -50,7 +50,7 @@ class _SalesTaxScreenState extends State<SalesTaxScreen> {
           TextButton(
             onPressed: _resetForm,
             child: Text(
-              'Clear',
+              'Reset',
               style: TextStyle(color: Colors.white),
             ),
           ),

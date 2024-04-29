@@ -51,6 +51,7 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
         Simple Annual Growth Rate per Year (%): $simpleAnnualGrowthRate
       ''';
       showResultCard = true;
+
     } else {
       result = '';
     }
@@ -158,16 +159,14 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
                       double.tryParse(annualPeriodController.text) ?? 0;
 
                   double totalGain = amountReturned - investedAmount;
-                  double returnOfInvestment =
-                      (totalGain / investedAmount) * 100;
-                  double simpleAnnualGrowthRate =
-                      (totalGain / (investedAmount * annualPeriod)) * 100;
+                  double returnOfInvestment = ((totalGain / investedAmount) * 100);
+                  double simpleAnnualGrowthRate = ((totalGain / (investedAmount * annualPeriod)) * 100);
 
                   setState(() {
                     result = '''
-                      Total Gain of Investment: $totalGain
-                      Return of Investment (%): $returnOfInvestment
-                      Simple Annual Growth Rate per Year (%): $simpleAnnualGrowthRate
+                      Total Gain of Investment: $totalGain;
+                      Return of Investment (%): $returnOfInvestment;
+                      Simple Annual Growth Rate per Year (%): $simpleAnnualGrowthRate;
                     ''';
                     showResultCard = true;
                   });

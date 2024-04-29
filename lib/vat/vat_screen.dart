@@ -112,6 +112,7 @@ class _VATScreenState extends State<VATScreen> {
             icon: Icon(
               Icons.history,
               color: Colors.white,
+              size: 30,
             ),
             onPressed: () {
               Navigator.push(

@@ -10,9 +10,9 @@ class PercentageScreen extends StatefulWidget {
   final double? increasedValue;
   final double? decreasedValue;
 
-  const PercentageScreen({
+   PercentageScreen({
     Key? key,
-    this.selectedOption,
+     this.selectedOption,
     this.fromValue,
     this.toValue,
     this.result,
@@ -33,13 +33,20 @@ class _PercentageScreenState extends State<PercentageScreen> {
   late String _selectedOption;
   late DatabaseHelper databaseHelper;
 
+  String? checking(){
+    print(widget.selectedOption);
+    if(widget.selectedOption==null){
+      return "Increase/decrease X by Y%";
+    }else{
+      return widget.selectedOption;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     databaseHelper = DatabaseHelper.instance;
-    _selectedOption = widget.selectedOption ?? 'increase_decrease';
-    // Default fallback option
-
+    _selectedOption =  checking()!;
     fromController = TextEditingController(
         text: widget.fromValue?.toString() ?? '');
     toController = TextEditingController(
@@ -54,7 +61,7 @@ class _PercentageScreenState extends State<PercentageScreen> {
     int? toValue = int.tryParse(toController.text);
 
     if (fromValue != null && toValue != null) {
-      if (_selectedOption == 'increase_decrease') {
+      if (_selectedOption == 'Increase/decrease X by Y%') {
         increasedValue = fromValue + (fromValue * (toValue / 100));
         decreasedValue = fromValue - (fromValue * (toValue / 100));
         percentage = 0.0; // Reset percentage
@@ -69,6 +76,7 @@ class _PercentageScreenState extends State<PercentageScreen> {
   }
 
   double _calculatePercentageResult(int fromValue, int toValue) {
+    print(_selectedOption);
     switch (_selectedOption) {
       case 'percent_change':
         return ((toValue - fromValue) / fromValue) * 100;
@@ -88,7 +96,7 @@ class _PercentageScreenState extends State<PercentageScreen> {
       Map<String, dynamic> record;
       String dateTimeNow = DateTime.now().toIso8601String(); // Current timestamp
 
-      if (_selectedOption == 'increase_decrease') {
+      if (_selectedOption == 'Increase/decrease X by Y%') {
         record = {
           'title': 'Increase/decrease X by Y%',
           'x': fromValue,
@@ -115,6 +123,13 @@ class _PercentageScreenState extends State<PercentageScreen> {
       // Optionally, you could use a Snackbar to alert the user of the error
     }
   }
+  void _resetForm() {
+    setState(() {
+      fromController.clear();
+      toController.clear();
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +140,13 @@ class _PercentageScreenState extends State<PercentageScreen> {
           style: TextStyle(color: Colors.white), // Set text color to white
         ),
         actions: [
+          TextButton(
+            onPressed: _resetForm,
+            child: Text(
+              'Reset',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
           IconButton(
             icon: Icon(Icons.history, color: Colors.white), // Set icon color to white
             onPressed: () {
@@ -147,21 +169,34 @@ class _PercentageScreenState extends State<PercentageScreen> {
             buildRadioOptions(),
             SizedBox(height: 20),
             buildInputFields(),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                calculateResult(); // Corrected
-                setState(() {}); // Refresh UI with the latest result
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 12.0),
-                child: Text('Calculate'),
-              ),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.green,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+
+              child: ElevatedButton(
+                onPressed: () {
+                  calculateResult(); // Corrected
+                  setState(() {}); // Refresh UI with the latest result
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                  MaterialStateProperty.all<Color>(Colors.green),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                ),
+                child: const SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(
+                      'Calculate',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white), // Text color
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -177,7 +212,7 @@ class _PercentageScreenState extends State<PercentageScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildRadioListTile("Increase/decrease X by Y%", "increase_decrease"),
+        buildRadioListTile("Increase/decrease X by Y%", "Increase/decrease X by Y%"),
         buildRadioListTile("Percent change from X to Y", "percent_change"),
         buildRadioListTile("X is what percent of Y?", "x_percent_of_y"),
         buildRadioListTile("X is Y percent of what number?", "x_is_y_percent"),
@@ -190,7 +225,7 @@ class _PercentageScreenState extends State<PercentageScreen> {
     return RadioListTile<String>(
       title: Text(title),
       value: value,
-      groupValue: _selectedOption.isNotEmpty ? _selectedOption : "increase_decrease", // Set default to "increase_decrease"
+      groupValue: _selectedOption, // Set default to "increase_decrease"
       onChanged: (newValue) => setState(() => _selectedOption = newValue!),
       activeColor: Colors.green,
     );
@@ -251,7 +286,7 @@ class _PercentageScreenState extends State<PercentageScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (_selectedOption == "increase_decrease")
+                if (_selectedOption == "Increase/decrease X by Y%")
                   Column(
                     children: [
                       Text(
@@ -262,7 +297,7 @@ class _PercentageScreenState extends State<PercentageScreen> {
                       ),
                     ],
                   ),
-                if (_selectedOption != "increase_decrease")
+                if (_selectedOption != "Increase/decrease X by Y%")
                   Text("Result: ${percentage.toStringAsFixed(2)}"), // Removed incorrect syntax
               ],
             ),
