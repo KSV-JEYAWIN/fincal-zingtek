@@ -103,7 +103,7 @@ class _DiscountScreenState extends State<DiscountScreen> {
                   fontSize: 18, // Increase font size
                 ),
                 decoration: InputDecoration(
-                  labelText: 'Original Price',
+                  labelText: 'Original Price (\$)',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -115,7 +115,7 @@ class _DiscountScreenState extends State<DiscountScreen> {
                   fontSize: 18, // Increase font size
                 ),
                 decoration: InputDecoration(
-                  labelText: 'Discount Percentage',
+                  labelText: 'Discount Percentage (%)',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -134,6 +134,7 @@ class _DiscountScreenState extends State<DiscountScreen> {
                   child: const Text('Calculate'),
                 ),
               ),
+              SizedBox(height: 20),
               if (showResult) // Display result card only if showResult is true
                 FractionallySizedBox(
                   widthFactor: 0.9, // Adjust the width factor as needed
@@ -161,13 +162,13 @@ class _DiscountScreenState extends State<DiscountScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Discounted Price: ${discountedPrice.toStringAsFixed(2)}',
+                              'Discounted Price (\$): ${discountedPrice.toStringAsFixed(2)}',
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             SizedBox(height: 8),
                             Text(
-                              'Amount Saved: ${amountSaved.toStringAsFixed(2)}',
+                              'Amount Saved (\$): ${amountSaved.toStringAsFixed(2)}',
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),

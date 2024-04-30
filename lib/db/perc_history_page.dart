@@ -27,10 +27,8 @@ class _HistoryPageState extends State<HistoryPage> {
   Future<void> loadHistory() async {
     try {
       DatabaseHelper databaseHelper = DatabaseHelper.instance;
-      List<Map<String, dynamic>> percentagesList =
-          await databaseHelper.fetchRecentPercentageRows(limit: 100);
-      List<Map<String, dynamic>> incordecList =
-          await databaseHelper.fetchRecentIncordecRows(limit: 100);
+      List<Map<String, dynamic>> percentagesList = await databaseHelper.fetchRecentPercentageRows(limit: 100);
+      List<Map<String, dynamic>> incordecList = await databaseHelper.fetchRecentIncordecRows(limit: 100);
 
       setState(() {
         history = [...percentagesList, ...incordecList];
@@ -57,8 +55,7 @@ class _HistoryPageState extends State<HistoryPage> {
         selectedIds.add(id);
       }
       isSelectMode = selectedIds.isNotEmpty; // Update select mode state
-      selectAll =
-          selectedIds.length == history.length; // Adjust select all state
+      selectAll = selectedIds.length == history.length; // Adjust select all state
     });
   }
 
@@ -68,8 +65,7 @@ class _HistoryPageState extends State<HistoryPage> {
         selectedIds.clear();
         selectAll = false;
       } else {
-        selectedIds =
-            history.map((item) => item['id'] as int).toSet(); // Ensure integers
+        selectedIds = history.map((item) => item['id'] as int).toSet(); // Ensure integers
         selectAll = true;
       }
       isSelectMode = selectedIds.isNotEmpty; // Update select mode state
@@ -102,9 +98,7 @@ class _HistoryPageState extends State<HistoryPage> {
       appBar: AppBar(
         backgroundColor: Colors.green,
         title: Text(
-          isSelectMode
-              ? 'Selected: ${selectedIds.length}'
-              : 'Percentage History',
+          isSelectMode ? 'Selected: ${selectedIds.length}' : 'Percentage History',
           style: TextStyle(color: Colors.white),
         ),
         actions: [
@@ -113,6 +107,7 @@ class _HistoryPageState extends State<HistoryPage> {
               icon: Icon(Icons.delete, color: Colors.white),
               onPressed: deleteSelectedItems,
             ),
+
           if (isSelectMode)
             IconButton(
               icon: Icon(Icons.cancel, color: Colors.white),
@@ -131,105 +126,100 @@ class _HistoryPageState extends State<HistoryPage> {
               ),
               onPressed: selectAllItems,
             ),
+
         ],
         iconTheme: IconThemeData(color: Colors.white),
         //textTheme: TextTheme(title: TextStyle(color: Colors.white)), // Set text color
 // Set icon color
+
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : errorMessage != null
-              ? Center(child: Text(errorMessage!))
-              : ListView.separated(
-                  itemCount: history.length,
-                  separatorBuilder: (context, index) => Divider(),
-                  itemBuilder: (context, index) {
-                    Map<String, dynamic> item = history[index];
-                    final id = item['id'];
-                    final isSelected = selectedIds.contains(id);
+          ? Center(child: Text(errorMessage!))
+          : ListView.separated(
+        itemCount: history.length,
+        separatorBuilder: (context, index) => Divider(),
+        itemBuilder: (context, index) {
+          Map<String, dynamic> item = history[index];
+          final id = item['id'];
+          final isSelected = selectedIds.contains(id);
 
-                    return GestureDetector(
-                      onTap: () {
-                        if (isSelectMode) {
-                          toggleSelection(id);
-                        } else {
-                          navigateToPercentageScreen(item);
-                        }
-                      },
-                      onLongPress: () {
-                        setState(() {
-                          isSelectMode = true;
-                          toggleSelection(id);
-                        });
-                      },
-                      child: Row(
-                        children: [
-                          if (isSelectMode) // Checkbox before the date when in select mode
-                            Checkbox(
-                              value: isSelected,
-                              onChanged: (checked) => toggleSelection(id),
-                            ),
-                          Card(
-                            color: isSelected
-                                ? Colors.grey
-                                : Colors
-                                    .green, // Change color based on selection
-                            elevation: 4,
-                            child: Container(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '${_formattedDate(item["datetime"])[0]}\n ${_formattedDate(item["datetime"])[1]}\n ${_formattedDate(item["datetime"])[2]}',
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      color: Colors
-                                          .white, // Adjust text color based on background
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
+          return GestureDetector(
+            onTap: () {
+              if (isSelectMode) {
+                toggleSelection(id);
+              } else {
+                navigateToPercentageScreen(item);
+              }
+            },
+            onLongPress: () {
+              setState(() {
+                isSelectMode = true;
+                toggleSelection(id);
+              });
+            },
+            child: Row(
+              children: [
+                if (isSelectMode) // Checkbox before the date when in select mode
+                  Checkbox(
+                    value: isSelected,
+                    onChanged: (checked) => toggleSelection(id),
+                  ),
+                Card(
+                  color: isSelected ? Colors.grey : Colors.green, // Change color based on selection
+                  elevation: 4,
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${_formattedDate(item["datetime"])[0]}\n ${_formattedDate(item["datetime"])[1]}\n ${_formattedDate(item["datetime"])[2]}',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.white, // Adjust text color based on background
                           ),
-                          SizedBox(width: 8.0),
-                          Expanded(
-                            child: ListTile(
-                              title: Text(
-                                'X: ${item["x"]}  Y: ${item["y"]}',
-                                style: TextStyle(
-                                  color: Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? Colors.white
-                                      : Colors.black,
-                                ),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item["title"],
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  if (item.containsKey("value"))
-                                    Text('Result: ${item["value"]}'),
-                                  if (item.containsKey("increasedValue"))
-                                    Text(
-                                        'Increased Value: ${item["increasedValue"]}'),
-                                  if (item.containsKey("decreasedValue"))
-                                    Text(
-                                        'Decreased Value: ${item["decreasedValue"]}'),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
+                SizedBox(width: 8.0),
+                Expanded(
+                  child: ListTile(
+                    title: Text(
+                      'X: ${item["x"]}  Y: ${item["y"]}',
+                      style: TextStyle(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item["title"],
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        if (item.containsKey("value"))
+                          Text('Result: ${item["value"]}'),
+                        if (item.containsKey("increasedValue"))
+                          Text('Increased Value: ${item["increasedValue"]}'),
+                        if (item.containsKey("decreasedValue"))
+                          Text('Decreased Value: ${item["decreasedValue"]}'),
+
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -240,9 +230,9 @@ class _HistoryPageState extends State<HistoryPage> {
       context,
       MaterialPageRoute(
         builder: (context) => PercentageScreen(
-          selectedOption: item["title"], // Pass the title for the radio button
-          fromValue: item["x"], // Pass the X value
-          toValue: item["y"], // Pass the Y value
+          selectedOption:item["title"], // Pass the title for the radio button
+          fromValue: item["x"],          // Pass the X value
+          toValue: item["y"],            // Pass the Y value
           result: item.containsKey("value") ? item["value"].toDouble() : null,
           increasedValue: item.containsKey("increasedValue")
               ? item["increasedValue"].toDouble()
@@ -254,6 +244,7 @@ class _HistoryPageState extends State<HistoryPage> {
       ),
     );
   }
+
 
   List<String> _formattedDate(String datetime) {
     final parsedDate = DateTime.parse(datetime);

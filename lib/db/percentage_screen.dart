@@ -298,7 +298,7 @@ class _PercentageScreenState extends State<PercentageScreen> {
                     ],
                   ),
                 if (_selectedOption != "Increase/decrease X by Y%")
-                  Text("Result: ${percentage.toStringAsFixed(2)}"), // Removed incorrect syntax
+                  Text("Result (\$) : ${percentage.toStringAsFixed(2)}"), // Removed incorrect syntax
               ],
             ),
           ),

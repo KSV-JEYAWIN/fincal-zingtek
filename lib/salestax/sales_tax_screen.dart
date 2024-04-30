@@ -80,7 +80,7 @@ class _SalesTaxScreenState extends State<SalesTaxScreen> {
               controller: netPriceController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Net Price',
+                labelText: 'Net Price (\$)',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -141,13 +141,13 @@ class _SalesTaxScreenState extends State<SalesTaxScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Sales Tax Amount: $salesTaxAmount.toStringAsFixed(2)',
+                            'Sales Tax Amount (\$): $salesTaxAmount',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'Total Price: $totalPrice.toStringAsFixed(2)',
+                            'Total Price (\$) : $totalPrice',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),

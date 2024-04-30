@@ -103,7 +103,7 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
     setState(() {
       // Update the resultText with the calculated compound interest
       resultText =
-          'Compound Interest: \$${compoundInterest.toStringAsFixed(2)} ${getFrequencyLabel(compoundFrequencyValue)}';
+          'Compound Interest (\$) : \$${compoundInterest.toStringAsFixed(2)} ${getFrequencyLabel(compoundFrequencyValue)}';
     });
   }
 
@@ -170,7 +170,7 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
                 controller: principalController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'Principal Amount',
+                  labelText: 'Principal Amount (\$)',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -192,7 +192,7 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
                 controller: timeController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'Time Period (in years)',
+                  labelText: 'Time Period (years)',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -211,7 +211,13 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
                       .map((String value) {
                     return DropdownMenuItem(
                       value: value,
-                      child: Text(value),
+                      child: Text(value,
+                          style: TextStyle(
+                          color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white // Set text color to white in dark mode
+                          : Colors.black,
+                    )
+                    ),
                     );
                   }).toList(),
                   onChanged: (String? newValue) {
@@ -290,6 +296,7 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
                 ),
                 child: const Text('Calculate'),
               ),
+              SizedBox(height: 20),
               if (resultText != null)
                 FractionallySizedBox(
                   widthFactor: 0.9, // Adjust the width factor as needed
@@ -318,6 +325,7 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
                           children: [
                             Text(
                               resultText!,
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             SizedBox(height: 8),
                           ],

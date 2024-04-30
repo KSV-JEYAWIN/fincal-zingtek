@@ -46,9 +46,9 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
           (totalGain / (investedAmount * annualPeriod)) * 100;
 
       result = '''
-        Total Gain of Investment: $totalGain
-        Return of Investment (%): $returnOfInvestment
-        Simple Annual Growth Rate per Year (%): $simpleAnnualGrowthRate
+  Total Gain of Investment (\$): ${totalGain.toStringAsFixed(2)};
+  Return of Investment (%): ${returnOfInvestment.toStringAsFixed(2)};
+  Annual Growth Rate per Year (%): ${simpleAnnualGrowthRate.toStringAsFixed(2)};
       ''';
       showResultCard = true;
 
@@ -124,7 +124,7 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
               controller: investedAmountController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Invested Amount',
+                labelText: 'Invested Amount (\$)',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -133,7 +133,7 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
               controller: amountReturnedController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Amount Returned',
+                labelText: 'Amount Returned (\$)',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -142,7 +142,7 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
               controller: annualPeriodController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Annual Period',
+                labelText: 'Annual Period (Years)',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -164,9 +164,9 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
 
                   setState(() {
                     result = '''
-                      Total Gain of Investment: $totalGain.toStringAsFixed(2);
-                      Return of Investment (%): $returnOfInvestment.toStringAsFixed(2);
-                      Simple Annual Growth Rate per Year (%): $simpleAnnualGrowthRate.toStringAsFixed(2);
+  Total Gain of Investment (\$): ${totalGain.toStringAsFixed(2)};
+  Return of Investment (%): ${returnOfInvestment.toStringAsFixed(2)};
+  Annual Growth Rate per Year (%): ${simpleAnnualGrowthRate.toStringAsFixed(2)};
                     ''';
                     showResultCard = true;
                   });

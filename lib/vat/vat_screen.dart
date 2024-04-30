@@ -135,7 +135,7 @@ class _VATScreenState extends State<VATScreen> {
               controller: netPriceController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: 'Net Price',
+                labelText: 'Net Price (\$)',
                 border: OutlineInputBorder(), // Add border property
               ),
             ),
@@ -144,7 +144,7 @@ class _VATScreenState extends State<VATScreen> {
               controller: vatPercentageController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: 'VAT Percentage',
+                labelText: 'VAT Percentage(%)',
                 border: OutlineInputBorder(), // Add border property
               ),
             ),
@@ -207,12 +207,12 @@ class _VATScreenState extends State<VATScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'VAT Amount: $vatAmount.toStringAsFixed(2)',
+                            'VAT Amount (\$) : $vatAmount',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'Total Price: $totalPrice.toStringAsFixed(2)',
+                            'Total Price(\$) : $totalPrice',
                             style:
                             const TextStyle(fontWeight: FontWeight.bold),
                           ),

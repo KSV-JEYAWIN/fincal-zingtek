@@ -127,7 +127,7 @@ class _ProfitMarginScreenState extends State<ProfitMarginScreen> {
               controller: costPriceController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: 'Cost Price',
+                labelText: 'Cost Price (\$)',
                 border: OutlineInputBorder(),
               ),
               onChanged: (_) => _updateProfit(),
@@ -137,7 +137,7 @@ class _ProfitMarginScreenState extends State<ProfitMarginScreen> {
               controller: sellingPriceController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: 'Selling Price',
+                labelText: 'Selling Price (\$)',
                 border: OutlineInputBorder(),
               ),
               onChanged: (_) => _updateProfit(),
@@ -205,13 +205,13 @@ class _ProfitMarginScreenState extends State<ProfitMarginScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const SizedBox(height: 15),
+                          //const SizedBox(height: 15),
                           Text(
-                            'Profit Amount: $profitAmount',
+                            'Profit Amount (\$): $profitAmount',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            'Profit Percentage: $profitPercentage%',
+                            'Profit Percentage (\$): $profitPercentage%',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],

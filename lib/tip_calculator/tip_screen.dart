@@ -175,7 +175,7 @@ class _TipScreenState extends State<TipScreen> {
                   'Tip Amount: \$${tipAmount.toStringAsFixed(2)}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 8),
+
                 Text(
                   'Total Amount: \$${totalAmount.toStringAsFixed(2)}',
                   style: const TextStyle(fontWeight: FontWeight.bold),

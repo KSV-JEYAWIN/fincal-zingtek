@@ -130,7 +130,7 @@ class _MortgageScreenState extends State<MortgageScreen> {
               controller: loanAmountController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: 'Loan Amount',
+                labelText: 'Loan Amount(\$)',
                 border: OutlineInputBorder(),
               ),
               onChanged: (_) => calculateMortgage(),
@@ -233,15 +233,15 @@ class _MortgageScreenState extends State<MortgageScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Monthly EMI: $monthlyEMI',
+                            'Monthly EMI (\$) : $monthlyEMI',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            'Total Amount Payable: $totalAmountPayable.toStringAsFixed(2)',
+                            'Total Amount Payable(\$) : $totalAmountPayable',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            'Interest Amount: $interestAmount.toStringAsFixed(2)',
+                            'Interest Amount(\$): $interestAmount',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],

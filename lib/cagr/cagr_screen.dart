@@ -138,7 +138,7 @@ class _CAGRScreenState extends State<CAGRScreen> {
               controller: initialInvestmentController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: 'Initial Investment',
+                labelText: 'Initial Investment(\$)',
                 border: OutlineInputBorder(),
               ),
               //onChanged: (_) => _calculateCAGR(),
@@ -148,7 +148,7 @@ class _CAGRScreenState extends State<CAGRScreen> {
               controller: finalInvestmentController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: 'Final Investment',
+                labelText: 'Final Investment(\$)',
                 border: OutlineInputBorder(),
               ),
               //onChanged: (_) => _calculateCAGR(),
@@ -224,7 +224,7 @@ class _CAGRScreenState extends State<CAGRScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'CAGR: ${cagr.toStringAsFixed(2)}%',
+                          'CAGR (\$): ${cagr.toStringAsFixed(2)}%',
                           style:
                           const TextStyle(fontWeight: FontWeight.bold),
                         ),
