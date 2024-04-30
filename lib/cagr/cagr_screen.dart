@@ -194,48 +194,48 @@ class _CAGRScreenState extends State<CAGRScreen> {
                 ),
               ),
             ),
-            if (showResult) ...[
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
+
+
+            SizedBox(height: 8),
+            if (showResult)
+              FractionallySizedBox(
+              widthFactor: 0.9, // Adjust the width factor as needed
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
                 child: Card(
-                  elevation: 4,
-                  // Add elevation to create a shadow
-                  shadowColor: Colors.black.withOpacity(0.3),
-                  // Set shadow color and opacity
+                  elevation: 0, // Remove default card elevation
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Container(
+                  child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'CAGR: ${cagr.toStringAsFixed(2)}%',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style:
+                          const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 8),
+
                       ],
                     ),
                   ),
                 ),
               ),
-            ],
+            ),
           ],
         ),
       ),

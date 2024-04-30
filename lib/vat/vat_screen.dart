@@ -181,49 +181,43 @@ class _VATScreenState extends State<VATScreen> {
             const SizedBox(height: 20),
             // Display the result card if vatAmount and totalPrice are greater than 0
             if (vatAmount > 0 && totalPrice > 0) ...[
-              SizedBox(
-                width: double.infinity,
-                child: Card(
-                  elevation: 4,
-                  // Add elevation to create a shadow
-                  shadowColor: Colors.black.withOpacity(0.3),
-                  // Set shadow color and opacity
-                  shape: RoundedRectangleBorder(
+              FractionallySizedBox(
+                widthFactor: 0.9, // Adjust the width factor as needed
+                child: Container(
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
                   ),
-                  child: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
+                  child: Card(
+                    elevation: 0, // Remove default card elevation
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'VAT Amount: $vatAmount',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'VAT Amount: $vatAmount.toStringAsFixed(2)',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          'Total Price: $totalPrice',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                          SizedBox(height: 8),
+                          Text(
+                            'Total Price: $totalPrice.toStringAsFixed(2)',
+                            style:
+                            const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

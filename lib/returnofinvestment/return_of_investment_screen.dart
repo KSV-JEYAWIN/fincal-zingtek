@@ -164,9 +164,9 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
 
                   setState(() {
                     result = '''
-                      Total Gain of Investment: $totalGain;
-                      Return of Investment (%): $returnOfInvestment;
-                      Simple Annual Growth Rate per Year (%): $simpleAnnualGrowthRate;
+                      Total Gain of Investment: $totalGain.toStringAsFixed(2);
+                      Return of Investment (%): $returnOfInvestment.toStringAsFixed(2);
+                      Simple Annual Growth Rate per Year (%): $simpleAnnualGrowthRate.toStringAsFixed(2);
                     ''';
                     showResultCard = true;
                   });

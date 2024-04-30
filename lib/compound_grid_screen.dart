@@ -92,7 +92,7 @@ class _CompoundGridScreenState extends State<CompoundGridScreen> {
     // Initialize the ad
     _bannerAd = BannerAd(
       adUnitId:
-      'ca-app-pub-3940256099942544/6300978111', // Replace with your actual ad unit ID
+          'ca-app-pub-3940256099942544/6300978111', // Replace with your actual ad unit ID
       size: AdSize.banner,
       request: AdRequest(),
       listener: BannerAdListener(
@@ -188,7 +188,7 @@ class _CompoundGridScreenState extends State<CompoundGridScreen> {
                   mainAxisSpacing: 35.0,
                   children: List.generate(
                     compounds.length,
-                        (index) => _buildContainer(context, compounds[index]),
+                    (index) => _buildContainer(context, compounds[index]),
                   ),
                 ),
               ),
@@ -264,11 +264,7 @@ class _CompoundGridScreenState extends State<CompoundGridScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PercentageScreen(
-              selectedOption: 'Default',
-              fromValue: 0,
-              toValue: 0,
-            ),
+            builder: (context) => PercentageScreen(),
           ),
         );
         break;
@@ -345,7 +341,7 @@ class _CompoundGridScreenState extends State<CompoundGridScreen> {
         );
         break;
       default:
-      // Handle navigation to other screens
+        // Handle navigation to other screens
         break;
     }
   }

@@ -141,13 +141,13 @@ class _SalesTaxScreenState extends State<SalesTaxScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Sales Tax Amount: $salesTaxAmount',
+                            'Sales Tax Amount: $salesTaxAmount.toStringAsFixed(2)',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'Total Price: $totalPrice',
+                            'Total Price: $totalPrice.toStringAsFixed(2)',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),

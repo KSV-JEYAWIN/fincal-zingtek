@@ -237,11 +237,11 @@ class _MortgageScreenState extends State<MortgageScreen> {
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            'Total Amount Payable: $totalAmountPayable',
+                            'Total Amount Payable: $totalAmountPayable.toStringAsFixed(2)',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            'Interest Amount: $interestAmount',
+                            'Interest Amount: $interestAmount.toStringAsFixed(2)',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
