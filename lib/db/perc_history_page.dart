@@ -42,7 +42,7 @@ class _HistoryPageState extends State<HistoryPage> {
     } catch (error) {
       setState(() {
         isLoading = false;
-        errorMessage = 'Error loading data: $error';
+        errorMessage = 'Error loading in  data: $error';
       });
     }
   }
@@ -189,20 +189,21 @@ class _HistoryPageState extends State<HistoryPage> {
                 SizedBox(width: 8.0),
                 Expanded(
                   child: ListTile(
-                    title: Text(
-                      'X: ${item["x"]}  Y: ${item["y"]}',
-                      style: TextStyle(
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black,
-                      ),
+
+                    title:Text(
+                      item["title"],
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          item["title"],
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          'X: ${item["x"]}  Y: ${item["y"]}',
+                          style: TextStyle(
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white
+                                : Colors.black,
+                          ),
                         ),
                         if (item.containsKey("value"))
                           Text('Result: ${item["value"]}'),
@@ -213,6 +214,9 @@ class _HistoryPageState extends State<HistoryPage> {
 
                       ],
                     ),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    contentPadding:
+                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   ),
                 ),
               ],

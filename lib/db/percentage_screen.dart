@@ -78,13 +78,13 @@ class _PercentageScreenState extends State<PercentageScreen> {
   double _calculatePercentageResult(int fromValue, int toValue) {
     print(_selectedOption);
     switch (_selectedOption) {
-      case 'percent_change':
+      case 'Percent change from X to Y':
         return ((toValue - fromValue) / fromValue) * 100;
-      case 'x_percent_of_y':
+      case 'X is what percent of Y?':
         return (fromValue / toValue) * 100;
-      case 'x_is_y_percent':
+      case 'X is Y percent of what number?':
         return (fromValue * 100) / toValue;
-      case 'percent_difference':
+      case 'Percent difference between X & Y':
         return ((toValue - fromValue).abs() / fromValue) * 100;
       default:
         return 0.0;
@@ -213,10 +213,10 @@ class _PercentageScreenState extends State<PercentageScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         buildRadioListTile("Increase/decrease X by Y%", "Increase/decrease X by Y%"),
-        buildRadioListTile("Percent change from X to Y", "percent_change"),
-        buildRadioListTile("X is what percent of Y?", "x_percent_of_y"),
-        buildRadioListTile("X is Y percent of what number?", "x_is_y_percent"),
-        buildRadioListTile("Percent difference between X & Y", "percent_difference"),
+        buildRadioListTile("Percent change from X to Y", "Percent change from X to Y"),
+        buildRadioListTile("X is what percent of Y?", "X is what percent of Y?"),
+        buildRadioListTile("X is Y percent of what number?", "X is Y percent of what number?"),
+        buildRadioListTile("Percent difference between X & Y", "Percent difference between X & Y"),
       ],
     );
   }
