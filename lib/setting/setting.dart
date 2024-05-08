@@ -19,7 +19,7 @@ class SettingsPage extends StatelessWidget {
                 end: Alignment.bottomRight,
                 colors: themeProvider.themeType == ThemeType.light
                     ? [Colors.blueAccent, Colors.purpleAccent]
-                    : [Colors.black, Colors.grey],
+                    : [Colors.black, Colors.black],
               ),
             ),
             child: ListView(

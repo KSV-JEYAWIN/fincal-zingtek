@@ -10,9 +10,9 @@ class PercentageScreen extends StatefulWidget {
   final double? increasedValue;
   final double? decreasedValue;
 
-   PercentageScreen({
+  PercentageScreen({
     Key? key,
-     this.selectedOption,
+    this.selectedOption,
     this.fromValue,
     this.toValue,
     this.result,
@@ -32,12 +32,13 @@ class _PercentageScreenState extends State<PercentageScreen> {
   late double percentage;
   late String _selectedOption;
   late DatabaseHelper databaseHelper;
+  late bool _showResult; // Add boolean flag
 
-  String? checking(){
+  String? checking() {
     print(widget.selectedOption);
-    if(widget.selectedOption==null){
+    if (widget.selectedOption == null) {
       return "Increase/decrease X by Y%";
-    }else{
+    } else {
       return widget.selectedOption;
     }
   }
@@ -46,14 +47,18 @@ class _PercentageScreenState extends State<PercentageScreen> {
   void initState() {
     super.initState();
     databaseHelper = DatabaseHelper.instance;
-    _selectedOption =  checking()!;
-    fromController = TextEditingController(
-        text: widget.fromValue?.toString() ?? '');
-    toController = TextEditingController(
-        text: widget.toValue?.toString() ?? '');
+    _selectedOption = checking()!;
+    fromController =
+        TextEditingController(text: widget.fromValue?.toString() ?? '');
+    toController =
+        TextEditingController(text: widget.toValue?.toString() ?? '');
     increasedValue = widget.increasedValue ?? 0.0;
     decreasedValue = widget.decreasedValue ?? 0.0;
     percentage = widget.result ?? 0.0;
+    _showResult = false;
+    if (widget.fromValue != null && widget.toValue != null) {
+      onDataPrefilledFromHistory(); // Call the method when data is prefilled
+    } // Initialize _showResult to false
   }
 
   void calculateResult() {
@@ -71,7 +76,9 @@ class _PercentageScreenState extends State<PercentageScreen> {
 
       storeResultInDatabase(fromValue, toValue);
 
-      setState(() {}); // Refresh the UI to show the new result
+      setState(() {
+        _showResult = true; // Set _showResult to true when calculation is done
+      }); // Refresh the UI to show the new result
     }
   }
 
@@ -94,7 +101,8 @@ class _PercentageScreenState extends State<PercentageScreen> {
   void storeResultInDatabase(int fromValue, int toValue) async {
     try {
       Map<String, dynamic> record;
-      String dateTimeNow = DateTime.now().toIso8601String(); // Current timestamp
+      String dateTimeNow =
+          DateTime.now().toIso8601String(); // Current timestamp
 
       if (_selectedOption == 'Increase/decrease X by Y%') {
         record = {
@@ -123,11 +131,18 @@ class _PercentageScreenState extends State<PercentageScreen> {
       // Optionally, you could use a Snackbar to alert the user of the error
     }
   }
+
+  // Add a method to set _showResult to true when data is prefilled from history
+  void onDataPrefilledFromHistory() {
+    setState(() {
+      _showResult = true; // Set _showResult to true when data is prefilled
+    });
+  }
+
   void _resetForm() {
     setState(() {
       fromController.clear();
       toController.clear();
-
     });
   }
 
@@ -148,7 +163,8 @@ class _PercentageScreenState extends State<PercentageScreen> {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.history, color: Colors.white), // Set icon color to white
+            icon: Icon(Icons.history,
+                color: Colors.white), // Set icon color to white
             onPressed: () {
               Navigator.push(
                 context,
@@ -158,9 +174,9 @@ class _PercentageScreenState extends State<PercentageScreen> {
           ),
         ],
         backgroundColor: Colors.green,
-        iconTheme: IconThemeData(color: Colors.white), // Set all icon colors to white
+        iconTheme:
+            IconThemeData(color: Colors.white), // Set all icon colors to white
       ),
-
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -172,15 +188,13 @@ class _PercentageScreenState extends State<PercentageScreen> {
             const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
-
               child: ElevatedButton(
                 onPressed: () {
-                  calculateResult(); // Corrected
-                  setState(() {}); // Refresh UI with the latest result
+                  calculateResult(); // Call calculateResult function to calculate the result
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.green),
+                      MaterialStateProperty.all<Color>(Colors.green),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -200,8 +214,9 @@ class _PercentageScreenState extends State<PercentageScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 20,width: 500),
-            buildResultCard(), // Display the result card
+            SizedBox(height: 20, width: 500),
+            if (_showResult)
+              buildResultCard(), // Conditionally display result card
           ],
         ),
       ),
@@ -212,11 +227,16 @@ class _PercentageScreenState extends State<PercentageScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildRadioListTile("Increase/decrease X by Y%", "Increase/decrease X by Y%"),
-        buildRadioListTile("Percent change from X to Y", "Percent change from X to Y"),
-        buildRadioListTile("X is what percent of Y?", "X is what percent of Y?"),
-        buildRadioListTile("X is Y percent of what number?", "X is Y percent of what number?"),
-        buildRadioListTile("Percent difference between X & Y", "Percent difference between X & Y"),
+        buildRadioListTile(
+            "Increase/decrease X by Y%", "Increase/decrease X by Y%"),
+        buildRadioListTile(
+            "Percent change from X to Y", "Percent change from X to Y"),
+        buildRadioListTile(
+            "X is what percent of Y?", "X is what percent of Y?"),
+        buildRadioListTile(
+            "X is Y percent of what number?", "X is Y percent of what number?"),
+        buildRadioListTile("Percent difference between X & Y",
+            "Percent difference between X & Y"),
       ],
     );
   }
@@ -291,14 +311,20 @@ class _PercentageScreenState extends State<PercentageScreen> {
                     children: [
                       Text(
                         "Increased Value: ${increasedValue.toStringAsFixed(2)}",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         "Decreased Value: ${decreasedValue.toStringAsFixed(2)}",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
                 if (_selectedOption != "Increase/decrease X by Y%")
-                  Text("Result (\$) : ${percentage.toStringAsFixed(2)}"), // Removed incorrect syntax
+                  Text(
+                    "Result (\$) : ${percentage.toStringAsFixed(2)}",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                // Removed incorrect syntax
               ],
             ),
           ),

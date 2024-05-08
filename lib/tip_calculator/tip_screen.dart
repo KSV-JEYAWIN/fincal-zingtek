@@ -145,46 +145,49 @@ class _TipScreenState extends State<TipScreen> {
       return SizedBox.shrink();
     }
 
-    return FractionallySizedBox(
-      widthFactor: 0.9, // Adjust the width factor as needed
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20.0), // Add margin for spacing
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Card(
-          elevation: 0, // Remove default card elevation
-          shape: RoundedRectangleBorder(
+    return Align(
+      alignment:Alignment.topLeft,
+      child: FractionallySizedBox(
+        widthFactor: 0.9, // Adjust the width factor as needed
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 20.0), // Add margin for spacing
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Tip Amount: \$${tipAmount.toStringAsFixed(2)}',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
+          child: Card(
+            elevation: 0, // Remove default card elevation
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Tip Amount: \$${tipAmount.toStringAsFixed(2)}',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
 
-                Text(
-                  'Total Amount: \$${totalAmount.toStringAsFixed(2)}',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'Amount Per Person: \$${amountPerPerson.toStringAsFixed(2)}',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
+                  Text(
+                    'Total Amount: \$${totalAmount.toStringAsFixed(2)}',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'Amount Per Person: \$${amountPerPerson.toStringAsFixed(2)}',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

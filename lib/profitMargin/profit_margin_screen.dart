@@ -177,50 +177,53 @@ class _ProfitMarginScreenState extends State<ProfitMarginScreen> {
             ),
             ),
             const SizedBox(height: 20),
-            Visibility(
-              visible: showResult,
-              child: FractionallySizedBox(
-                widthFactor: 0.9, // Adjust the width factor as needed
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Card(
-                    elevation: 0, // Remove default card elevation
-                    shape: RoundedRectangleBorder(
+            Align(
+              alignment: Alignment.topLeft,
+              child: Visibility(
+                visible: showResult,
+                child: FractionallySizedBox(
+                  widthFactor: 0.9, // Adjust the width factor as needed
+                  child: Container(
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          //const SizedBox(height: 15),
-                          Text(
-                            'Profit Amount (\$): $profitAmount',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            'Profit Percentage (\$): $profitPercentage%',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                    child: Card(
+                      elevation: 0, // Remove default card elevation
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Profit Amount (\$): $profitAmount',
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              'Profit Percentage (\$): $profitPercentage%',
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
             ),
+
           ],
         ),
       ),

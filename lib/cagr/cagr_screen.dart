@@ -198,44 +198,48 @@ class _CAGRScreenState extends State<CAGRScreen> {
 
             SizedBox(height: 8),
             if (showResult)
-              FractionallySizedBox(
-              widthFactor: 0.9, // Adjust the width factor as needed
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Card(
-                  elevation: 0, // Remove default card elevation
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'CAGR (\$): ${cagr.toStringAsFixed(2)}%',
-                          style:
-                          const TextStyle(fontWeight: FontWeight.bold),
+              Align(
+                alignment: Alignment.topLeft,
+                child: FractionallySizedBox(
+                  widthFactor: 0.9, // Adjust the width factor as needed
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3), // changes position of shadow
                         ),
-                        SizedBox(height: 8),
-
                       ],
                     ),
+                    child: Card(
+                      elevation: 0, // Remove default card elevation
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'CAGR (\$): ${cagr.toStringAsFixed(2)}%',
+                              style:
+                              const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: 8),
+
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
+
               ),
-            ),
           ],
         ),
       ),

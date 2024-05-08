@@ -171,7 +171,7 @@ class _CompoundGridScreenState extends State<CompoundGridScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: isDarkMode
-                ? [Colors.black, Colors.grey]
+                ? [Colors.black, Colors.black]
                 : [Colors.white, Colors.white],
           ),
         ),

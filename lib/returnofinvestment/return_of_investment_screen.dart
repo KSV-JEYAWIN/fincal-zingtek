@@ -46,9 +46,9 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
           (totalGain / (investedAmount * annualPeriod)) * 100;
 
       result = '''
-  Total Gain of Investment (\$): ${totalGain.toStringAsFixed(2)};
-  Return of Investment (%): ${returnOfInvestment.toStringAsFixed(2)};
-  Annual Growth Rate per Year (%): ${simpleAnnualGrowthRate.toStringAsFixed(2)};
+  Total Gain of Investment (\$): ${totalGain.toStringAsFixed(2)}
+  Return of Investment (%): ${returnOfInvestment.toStringAsFixed(2)}
+  Annual Growth Rate per Year (%): ${simpleAnnualGrowthRate.toStringAsFixed(2)}
       ''';
       showResultCard = true;
 
@@ -164,9 +164,9 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
 
                   setState(() {
                     result = '''
-  Total Gain of Investment (\$): ${totalGain.toStringAsFixed(2)};
-  Return of Investment (%): ${returnOfInvestment.toStringAsFixed(2)};
-  Annual Growth Rate per Year (%): ${simpleAnnualGrowthRate.toStringAsFixed(2)};
+  Total Gain of Investment (\$): ${totalGain.toStringAsFixed(2)}
+  Return of Investment (%): ${returnOfInvestment.toStringAsFixed(2)}
+  Annual Growth Rate per Year (%): ${simpleAnnualGrowthRate.toStringAsFixed(2)}
                     ''';
                     showResultCard = true;
                   });
@@ -207,41 +207,45 @@ class _ReturnOfInvestmentScreenState extends State<ReturnOfInvestmentScreen> {
             ),
             SizedBox(height: 20),
             if (showResultCard) // Display result card only if showResult is true
-              FractionallySizedBox(
-                widthFactor: 0.9, // Adjust the width factor as needed
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
+              Align(
+      alignment: Alignment.topLeft,
+      child:               FractionallySizedBox(
+        widthFactor: 0.9, // Adjust the width factor as needed
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Card(
+            elevation: 0, // Remove default card elevation
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    result,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  child: Card(
-                    elevation: 0, // Remove default card elevation
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            result,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 8),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                  //SizedBox(height: 8),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+
               ),
           ],
         ),
