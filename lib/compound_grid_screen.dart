@@ -92,7 +92,7 @@ class _CompoundGridScreenState extends State<CompoundGridScreen> {
     // Initialize the ad
     _bannerAd = BannerAd(
       adUnitId:
-      'ca-app-pub-3940256099942544/6300978111', // Replace with your actual ad unit ID
+          'ca-app-pub-3940256099942544/6300978111', // Replace with your actual ad unit ID
       size: AdSize.banner,
       request: AdRequest(),
       listener: BannerAdListener(
@@ -165,46 +165,46 @@ class _CompoundGridScreenState extends State<CompoundGridScreen> {
           ],
         ),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: isDarkMode
-                ? [Colors.black, Colors.black]
-                : [Colors.white, Colors.white],
-          ),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: GridView.count(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 3.0,
-                  mainAxisSpacing: 35.0,
+      body: Column(
+        children: [
+          Expanded(
+            child: OrientationBuilder(
+              builder: (context, orientation) {
+                return GridView.count(
+                  crossAxisCount: _crossAxisCount(orientation),
                   children: List.generate(
                     compounds.length,
-                        (index) => _buildContainer(context, compounds[index]),
+                    (index) => _buildContainer(context, compounds[index]),
                   ),
-                ),
-              ),
-              if (_isLoaded) ...[
-                SizedBox(height: 10), // Adjust as needed
-                Container(
-                  height: _bannerAd?.size.height.toDouble(),
-                  alignment: Alignment.center,
-                  child: AdWidget(ad: _bannerAd!),
-                ),
-              ],
-            ],
+                );
+              },
+            ),
           ),
-        ),
+          if (_isLoaded) ...[
+            SizedBox(height: 10), // Adjust as needed
+            Container(
+              height: _bannerAd?.size.height.toDouble(),
+              alignment: Alignment.center,
+              child: AdWidget(ad: _bannerAd!),
+            ),
+          ],
+        ],
       ),
     );
+  }
+
+  int _crossAxisCount(Orientation orientation) {
+    if (orientation == Orientation.portrait) {
+      return 3; // 3 columns in portrait mode
+    } else {
+      // Use MediaQuery to determine screen width and adjust columns accordingly
+      double screenWidth = MediaQuery.of(context).size.width;
+      if (screenWidth > 600) {
+        return 5; // 5 columns for larger screens in landscape mode
+      } else {
+        return 4; // 4 columns for smaller screens in landscape mode
+      }
+    }
   }
 
   Widget _buildContainer(BuildContext context, Map<String, dynamic> compound) {
@@ -265,10 +265,10 @@ class _CompoundGridScreenState extends State<CompoundGridScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => PercentageScreen(
-              // selectedOption: 'Default',
-              // fromValue: 0,
-              // toValue: 0,
-            ),
+                // selectedOption: 'Default',
+                // fromValue: 0,
+                // toValue: 0,
+                ),
           ),
         );
         break;
@@ -345,7 +345,7 @@ class _CompoundGridScreenState extends State<CompoundGridScreen> {
         );
         break;
       default:
-      // Handle navigation to other screens
+        // Handle navigation to other screens
         break;
     }
   }

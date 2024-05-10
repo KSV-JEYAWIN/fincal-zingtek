@@ -1,6 +1,5 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-// The CompoundInterest class import
 
 class DatabaseHelper {
   static Database? _database;
@@ -57,20 +56,6 @@ class DatabaseHelper {
     } catch (e) {
       print('Error fetching compound interest data: $e');
       rethrow;
-    }
-  }
-
-  static Future<void> deleteCompoundInterest(int id) async {
-    try {
-      final Database db = await database;
-      await db.delete(
-        _tableName,
-        where: 'id = ?',
-        whereArgs: [id],
-      );
-    } catch (e) {
-      print('Error deleting compound interest record: $e');
-      throw Exception('Failed to delete record');
     }
   }
 }

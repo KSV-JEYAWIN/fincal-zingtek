@@ -1,13 +1,9 @@
+import 'package:fincal/setting/theme/wallpaperoption.dart';
 import 'package:flutter/material.dart';
 import 'package:fincal/setting/theme/themeprovider.dart';
 import 'package:provider/provider.dart';
 
-class ThemeSettingsPage extends StatefulWidget {
-  @override
-  _ThemeSettingsPageState createState() => _ThemeSettingsPageState();
-}
-
-class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
+class ThemeSettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,9 +31,7 @@ class _ThemeSettingsPageState extends State<ThemeSettingsPage> {
       BuildContext context, String title, ThemeType themeType) {
     return InkWell(
       onTap: () {
-        setState(() {
-          Provider.of<ThemeProvider>(context, listen: false).setTheme(themeType);
-        });
+        Provider.of<ThemeProvider>(context, listen: false).setTheme(themeType);
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 16.0),

@@ -13,22 +13,18 @@ class TipScreen extends StatefulWidget {
 }
 
 class _TipScreenState extends State<TipScreen> {
-  late TextEditingController billAmountController;
-  late TextEditingController tipPercentageController;
-  late TextEditingController numberOfPersonsController;
+  final TextEditingController billAmountController = TextEditingController();
+  final TextEditingController tipPercentageController = TextEditingController();
+  final TextEditingController numberOfPersonsController =
+      TextEditingController();
 
   double tipAmount = 0.0;
   double totalAmount = 0.0;
   double amountPerPerson = 0.0;
-  bool showResult = false;
 
   @override
   void initState() {
     super.initState();
-    billAmountController = TextEditingController();
-    tipPercentageController = TextEditingController();
-    numberOfPersonsController = TextEditingController();
-
     if (widget.initialTip != null) {
       billAmountController.text =
           widget.initialTip!.billAmount.toStringAsFixed(2);
@@ -40,12 +36,50 @@ class _TipScreenState extends State<TipScreen> {
     }
   }
 
-  @override
-  void dispose() {
-    billAmountController.dispose();
-    tipPercentageController.dispose();
-    numberOfPersonsController.dispose();
-    super.dispose();
+  void _calculateTip() {
+    double billAmount = double.tryParse(billAmountController.text) ?? 0.0;
+    double tipPercentage = double.tryParse(tipPercentageController.text) ?? 0.0;
+    int numberOfPersons = int.tryParse(numberOfPersonsController.text) ?? 1;
+
+    setState(() {
+      tipAmount = (billAmount * tipPercentage) / 100;
+      totalAmount = billAmount + tipAmount;
+      amountPerPerson = totalAmount / numberOfPersons;
+    });
+  }
+
+  void _storeTipData() {
+    double billAmount = double.tryParse(billAmountController.text) ?? 0.0;
+    double tipPercentage = double.tryParse(tipPercentageController.text) ?? 0.0;
+    int numberOfPersons = int.tryParse(numberOfPersonsController.text) ?? 1;
+
+    String datetime = DateTime.now().toString();
+
+    Tip tip = Tip(
+      billAmount: billAmount,
+      tipPercentage: tipPercentage,
+      numberOfPersons: numberOfPersons,
+      tipAmount: tipAmount,
+      totalAmount: totalAmount,
+      amountPerPerson: amountPerPerson,
+      datetime: datetime,
+    );
+
+    // Store data in the database
+    DatabaseHelper().insertTip(tip);
+
+    // You can also show a message or perform any other action after storing data if needed
+  }
+
+  void _resetForm() {
+    setState(() {
+      billAmountController.clear();
+      tipPercentageController.clear();
+      numberOfPersonsController.clear();
+      tipAmount = 0.0;
+      totalAmount = 0.0;
+      amountPerPerson = 0.0;
+    });
   }
 
   @override
@@ -61,7 +95,7 @@ class _TipScreenState extends State<TipScreen> {
           TextButton(
             onPressed: _resetForm,
             child: Text(
-              'Reset',
+              'Clear',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -133,118 +167,33 @@ class _TipScreenState extends State<TipScreen> {
               ),
               child: const Text('Calculate'),
             ),
-            _buildResultCard(),
+            if (tipAmount != 0.0)
+              Card(
+                margin: const EdgeInsets.only(top: 20.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Tip Amount: \$${tipAmount.toStringAsFixed(2)}'),
+                      Text('Total Amount: \$${totalAmount.toStringAsFixed(2)}'),
+                      Text(
+                          'Amount Per Person: \$${amountPerPerson.toStringAsFixed(2)}'),
+                    ],
+                  ),
+                ),
+              ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildResultCard() {
-    if (!showResult) {
-      return SizedBox.shrink();
-    }
-
-    return Align(
-      alignment:Alignment.topLeft,
-      child: FractionallySizedBox(
-        widthFactor: 0.9, // Adjust the width factor as needed
-        child: Container(
-          margin: EdgeInsets.symmetric(vertical: 20.0), // Add margin for spacing
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ],
-          ),
-          child: Card(
-            elevation: 0, // Remove default card elevation
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Tip Amount: \$${tipAmount.toStringAsFixed(2)}',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-
-                  Text(
-                    'Total Amount: \$${totalAmount.toStringAsFixed(2)}',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Amount Per Person: \$${amountPerPerson.toStringAsFixed(2)}',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _calculateTip() {
-    try {
-      double billAmount = double.tryParse(billAmountController.text) ?? 0.0;
-      double tipPercentage =
-          double.tryParse(tipPercentageController.text) ?? 0.0;
-      int numberOfPersons = int.tryParse(numberOfPersonsController.text) ?? 1;
-
-      setState(() {
-        tipAmount = (billAmount * tipPercentage) / 100;
-        totalAmount = billAmount + tipAmount;
-        amountPerPerson = totalAmount / numberOfPersons;
-        showResult = true;
-      });
-    } catch (e) {
-      print('Error calculating tip: $e');
-    }
-  }
-
-  void _storeTipData() {
-    double billAmount = double.tryParse(billAmountController.text) ?? 0.0;
-    double tipPercentage = double.tryParse(tipPercentageController.text) ?? 0.0;
-    int numberOfPersons = int.tryParse(numberOfPersonsController.text) ?? 1;
-
-    String datetime = DateTime.now().toString();
-
-    Tip tip = Tip(
-      billAmount: billAmount,
-      tipPercentage: tipPercentage,
-      numberOfPersons: numberOfPersons,
-      tipAmount: tipAmount,
-      totalAmount: totalAmount,
-      amountPerPerson: amountPerPerson,
-      datetime: datetime,
-    );
-
-    // Store data in the database
-    DatabaseHelper().insertTip(tip);
-
-    // You can also show a message or perform any other action after storing data if needed
-  }
-
-  void _resetForm() {
-    setState(() {
-      billAmountController.clear();
-      tipPercentageController.clear();
-      numberOfPersonsController.clear();
-      tipAmount = 0.0;
-      totalAmount = 0.0;
-      amountPerPerson = 0.0;
-      showResult = false;
-    });
+  @override
+  void dispose() {
+    billAmountController.dispose();
+    tipPercentageController.dispose();
+    numberOfPersonsController.dispose();
+    super.dispose();
   }
 }

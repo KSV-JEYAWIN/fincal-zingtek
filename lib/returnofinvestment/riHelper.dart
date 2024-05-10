@@ -53,13 +53,4 @@ class DBHelper {
       return InvestmentData.fromMap(maps[i]);
     });
   }
-
-  static Future<int> deleteInvestmentData(int id) async {
-    final db = await database;
-    return await db.delete(
-      _tableName,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-  }
 }

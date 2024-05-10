@@ -19,7 +19,7 @@ class SettingsPage extends StatelessWidget {
                 end: Alignment.bottomRight,
                 colors: themeProvider.themeType == ThemeType.light
                     ? [Colors.blueAccent, Colors.purpleAccent]
-                    : [Colors.black, Colors.black],
+                    : [Colors.black, Colors.grey],
               ),
             ),
             child: ListView(
@@ -32,13 +32,20 @@ class SettingsPage extends StatelessWidget {
                   ThemeSettingsPage(),
                   Icons.color_lens,
                 ),
-                _buildSettingsItem(
-                  context,
-                  'Feedback',
-                  'Give us your feedback',
-                  FeedbackPage(),
-                  Icons.feedback,
-                ),
+                // _buildSettingsItem(
+                //   context,
+                // 'Currency Selection',
+                // 'Choose your default currency',
+                //  CurrencySelectionPage(),
+                // Icons.attach_money,
+                //  ),
+                //_buildSettingsItem(
+                // context,
+                // 'Feedback',
+                //'Give us your feedback',
+                //   FeedbackPage(),
+//Icons.feedback,
+                // ),
                 _buildSettingsItem(
                   context,
                   'Rate Us',
@@ -46,13 +53,13 @@ class SettingsPage extends StatelessWidget {
                   RateUsPage(),
                   Icons.star,
                 ),
-                _buildSettingsItem(
-                  context,
-                  'Licenses',
-                  'View open-source licenses',
-                  LicensesPage(),
-                  Icons.description,
-                ),
+                // _buildSettingsItem(
+                // context,
+                //   'Licenses',
+//View open-source licenses',
+                // LicensesPage(),
+                //  Icons.description,
+                // ),
                 _buildSettingsItem(
                   context,
                   'Terms of Service',
@@ -97,7 +104,7 @@ class SettingsPage extends StatelessWidget {
             Icon(
               iconData,
               size: 32.0,
-              color: Colors.green,
+              color: Colors.blueAccent,
             ),
             SizedBox(width: 16.0),
             Column(

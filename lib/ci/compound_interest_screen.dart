@@ -39,18 +39,14 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
     compoundFrequencyValue = widget.compoundFrequency ?? 'Monthly';
 
     // Calculate compound interest when the screen is initialized with data from DB
-    if (widget.principal != null &&
-        widget.rate != null &&
-        widget.time != null) {
-      _calculateCompoundInterest(); // Calculate compound interest
-    }
+    _calculateCompoundInterest();
   }
 
   double calculateCompoundInterest(
       double principal, double rate, double time, int compoundFrequency) {
     double compoundInterest = principal *
-        (pow((1 + rate / (100 * compoundFrequency)),
-            (compoundFrequency * time))) -
+            (pow((1 + rate / (100 * compoundFrequency)),
+                (compoundFrequency * time))) -
         principal;
     return compoundInterest;
   }
@@ -103,7 +99,7 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
     setState(() {
       // Update the resultText with the calculated compound interest
       resultText =
-      'Compound Interest (\$) : \$${compoundInterest.toStringAsFixed(2)} ${getFrequencyLabel(compoundFrequencyValue)}';
+          'Compound Interest: \$${compoundInterest.toStringAsFixed(2)} ${getFrequencyLabel(compoundFrequencyValue)}';
     });
   }
 
@@ -123,7 +119,7 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
       timeController.clear();
       resultText = null;
       compoundFrequencyValue =
-      'Monthly'; // Reset compound frequency to its initial value
+          'Monthly'; // Reset compound frequency to its initial value
     });
   }
 
@@ -170,7 +166,7 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
                 controller: principalController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'Principal Amount (\$)',
+                  labelText: 'Principal Amount',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -192,7 +188,7 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
                 controller: timeController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'Time Period (years)',
+                  labelText: 'Time Period (in years)',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -211,13 +207,7 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
                       .map((String value) {
                     return DropdownMenuItem(
                       value: value,
-                      child: Text(value,
-                          style: TextStyle(
-                            color: Theme.of(context).brightness == Brightness.dark
-                                ? Colors.white // Set text color to white in dark mode
-                                : Colors.black,
-                          )
-                      ),
+                      child: Text(value),
                     );
                   }).toList(),
                   onChanged: (String? newValue) {
@@ -289,54 +279,22 @@ class _CompoundInterestScreenState extends State<CompoundInterestScreen> {
                   backgroundColor: Colors.green,
                   // Text color
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Adjust the radius as needed
+                    borderRadius: BorderRadius.circular(
+                        10), // Adjust the radius as needed
                     // You can also use other shape classes like BeveledRectangleBorder or StadiumBorder
                   ),
                 ),
                 child: const Text('Calculate'),
               ),
-              SizedBox(height: 20),
               if (resultText != null)
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: FractionallySizedBox(
-                    widthFactor: 0.9, // Adjust the width factor as needed
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Card(
-                        elevation: 0, // Remove default card elevation
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                resultText!,
-                                style: const TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 8),
-                            ],
-                          ),
-                        ),
-                      ),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      resultText!,
                     ),
                   ),
                 ),
-
             ],
           ),
         ),

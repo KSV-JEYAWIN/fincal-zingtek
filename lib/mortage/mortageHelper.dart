@@ -1,6 +1,6 @@
+import 'package:fincal/mortage/mortageModel.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:fincal/mortage/mortageModel.dart';
 
 class DatabaseHelper {
   static Database? _database;
@@ -42,22 +42,10 @@ class DatabaseHelper {
   Future<List<MortgageData>> getAllMortgageDataOrderedByDateTimeDesc(
       {required int limit}) async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query(
-      tableName,
-      orderBy: 'dateTime DESC',
-      limit: limit,
-    );
+    final List<Map<String, dynamic>> maps =
+        await db.query(tableName, orderBy: 'dateTime DESC');
     return List.generate(maps.length, (i) {
       return MortgageData.fromMap(maps[i]);
     });
-  }
-
-  Future<void> deleteMortgageDataByIds(List<int> ids) async {
-    final db = await database;
-    await db.delete(
-      tableName,
-      where: 'id IN (${ids.map((id) => '?').join(', ')})',
-      whereArgs: ids,
-    );
   }
 }

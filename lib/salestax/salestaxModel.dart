@@ -4,8 +4,7 @@ class SalesTax {
   double? salesTaxRate;
   double? salesTaxAmount;
   double? totalPrice;
-  String? datetime;
-  bool? isSelected; // Add isSelected property
+  String? datetime; // Add datetime field
 
   SalesTax({
     this.id,
@@ -13,8 +12,7 @@ class SalesTax {
     required this.salesTaxRate,
     required this.salesTaxAmount,
     required this.totalPrice,
-    this.datetime,
-    this.isSelected = false, // Initialize isSelected to false
+    this.datetime, // Add datetime parameter
   });
 
   Map<String, dynamic> toMap() {
@@ -24,7 +22,7 @@ class SalesTax {
       'salesTaxRate': salesTaxRate,
       'salesTaxAmount': salesTaxAmount,
       'totalPrice': totalPrice,
-      'datetime': datetime,
+      'datetime': datetime, // Include datetime in the map
     };
   }
 
@@ -34,6 +32,6 @@ class SalesTax {
     salesTaxRate = map['salesTaxRate'];
     salesTaxAmount = map['salesTaxAmount'];
     totalPrice = map['totalPrice'];
-    datetime = map['datetime'];
+    datetime = map['datetime']; // Retrieve datetime from the map
   }
 }
