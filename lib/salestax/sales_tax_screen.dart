@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fincal/salestax/salestaxModel.dart';
 import 'package:fincal/salestax/salestaxHelper.dart';
-import 'satHistory.dart';
+import 'package:fincal/salestax/satHistory.dart'; // Import HistoryPage
 
 class SalesTaxScreen extends StatefulWidget {
   final SalesTax? salesTax;
@@ -50,7 +50,7 @@ class _SalesTaxScreenState extends State<SalesTaxScreen> {
           TextButton(
             onPressed: _resetForm,
             child: Text(
-              'Clear',
+              'Reset',
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -63,7 +63,9 @@ class _SalesTaxScreenState extends State<SalesTaxScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HistoryPage()),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        HistoryPage()), // Use HistoryPage here
               );
             },
           ),
@@ -78,7 +80,7 @@ class _SalesTaxScreenState extends State<SalesTaxScreen> {
               controller: netPriceController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Net Price',
+                labelText: 'Net Price (\$)',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -139,13 +141,13 @@ class _SalesTaxScreenState extends State<SalesTaxScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Sales Tax Amount: $salesTaxAmount',
+                            'Sales Tax Amount (\$): $salesTaxAmount',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'Total Price: $totalPrice',
+                            'Total Price (\$) : $totalPrice',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),

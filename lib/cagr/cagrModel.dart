@@ -1,5 +1,3 @@
-// cagrModel.dart
-
 class CAGRModel {
   final int id;
   final double initialInvestment;
@@ -7,6 +5,7 @@ class CAGRModel {
   final double duration;
   final double cagr;
   final String dateTime;
+  bool isSelected; // Add isSelected property
 
   CAGRModel({
     required this.id,
@@ -15,6 +14,7 @@ class CAGRModel {
     required this.duration,
     required this.cagr,
     required this.dateTime,
+    this.isSelected = false, // Default value for isSelected
   });
 
   Map<String, dynamic> toMap() {
@@ -25,6 +25,7 @@ class CAGRModel {
       'duration': duration,
       'cagr': cagr,
       'dateTime': dateTime,
+      'isSelected': isSelected ? 1 : 0, // Convert boolean to integer for SQLite
     };
   }
 }

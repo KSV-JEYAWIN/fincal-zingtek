@@ -45,4 +45,9 @@ class DiscountDatabaseHelper {
     final db = await database;
     return await db.insert('discounts', discount.toMap());
   }
+
+  Future<int> deleteDiscount(int id) async {
+    final db = await database;
+    return await db.delete('discounts', where: 'id = ?', whereArgs: [id]);
+  }
 }

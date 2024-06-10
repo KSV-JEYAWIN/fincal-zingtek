@@ -1,5 +1,3 @@
-// cagrHelper.dart
-
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'cagrModel.dart';
@@ -72,5 +70,39 @@ class DatabaseHelper {
         dateTime: maps[i]['dateTime'],
       );
     });
+  }
+
+  Future<int> deleteCAGR(int id) async {
+    final db = await database;
+    return await db.delete('cagr', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> deleteAllSelectedCAGR() async {
+    final db = await database;
+    List<CAGRModel> selectedItems = await getSelectedCAGRList();
+    List<int> ids = selectedItems.map((item) => item.id).toList();
+    return await db.delete('cagr', where: 'id IN (${ids.join(",")})');
+  }
+
+  Future<List<CAGRModel>> getSelectedCAGRList() async {
+    final db = await database;
+    final List<Map<String, dynamic>> maps =
+        await db.query('cagr', where: 'isSelected = ?', whereArgs: [1]);
+    return List.generate(maps.length, (i) {
+      return CAGRModel(
+        id: maps[i]['id'],
+        initialInvestment: maps[i]['initialInvestment'],
+        finalInvestment: maps[i]['finalInvestment'],
+        duration: maps[i]['duration'],
+        cagr: maps[i]['cagr'],
+        dateTime: maps[i]['dateTime'],
+      );
+    });
+  }
+
+  Future<void> updateCAGRSelection(int id, bool isSelected) async {
+    final db = await database;
+    await db.update('cagr', {'isSelected': isSelected ? 1 : 0},
+        where: 'id = ?', whereArgs: [id]);
   }
 }

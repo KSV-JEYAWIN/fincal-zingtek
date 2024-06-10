@@ -1,34 +1,40 @@
 class Incordec {
   int? id;
+  String? title;
   int? x;
   int? y;
   double? increasedValue;
   double? decreasedValue;
   String? datetime;
 
-  Incordec(
-      this.x, this.y, this.increasedValue, this.decreasedValue, this.datetime);
+  Incordec({
+    this.id,
+    this.title,
+    this.x,
+    this.y,
+    this.increasedValue,
+    this.decreasedValue,
+    this.datetime,
+  });
 
   Incordec.fromMapObject(Map<String, dynamic> map) {
-    this.id = map['id'];
-    this.x = map['x'];
-    this.y = map['y'];
-    this.increasedValue = map['increasedValue'];
-    this.decreasedValue = map['decreasedValue'];
-    this.datetime = map['datetime'];
+    id = map['id'];
+    title = map['title'];
+    x = map['x'];
+    y = map['y'];
+    increasedValue = map['increasedValue'];
+    decreasedValue = map['decreasedValue'];
+    datetime = map['datetime'];
   }
 
   Map<String, dynamic> toMap() {
-    var map = <String, dynamic>{
+    return {
+      'title': title,
       'x': x,
       'y': y,
       'increasedValue': increasedValue,
       'decreasedValue': decreasedValue,
       'datetime': datetime,
     };
-    if (id != null) {
-      map['id'] = id;
-    }
-    return map;
   }
 }

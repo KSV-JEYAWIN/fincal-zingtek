@@ -6,6 +6,8 @@ class DatabaseHelper {
   static Database? _database;
   static final _tableName = 'sales_tax';
 
+  DatabaseHelper._(); // Private constructor
+
   static Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDatabase();
@@ -59,5 +61,17 @@ class DatabaseHelper {
         datetime: maps[i]['datetime'],
       );
     });
+  }
+
+  static Future<void> deleteSalesTax(int? id) async {
+    if (id == null) {
+      throw ArgumentError("ID cannot be null");
+    }
+    final db = await database;
+    await db.delete(
+      _tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }

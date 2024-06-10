@@ -46,4 +46,13 @@ class DBHelper {
       return ProfitMargin.fromMap(maps[i]);
     });
   }
+
+  Future<void> deleteProfitMargin(int id) async {
+    final db = await database;
+    await db.delete(
+      'profit_margin',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }
