@@ -39,13 +39,13 @@ class SettingsPage extends StatelessWidget {
                 //  // FeedbackPage(),
                 //   Icons.feedback,
                 // ),
-                _buildSettingsItem(
-                  context,
-                  'Rate Us',
-                  'Rate the app on the store',
-                  RateUsPage(),
-                  Icons.star,
-                ),
+                // _buildSettingsItem(
+                //   context,
+                //   'Rate Us',
+                //   'Rate the app on the store',
+                //   RateUsPage(),
+                //   Icons.star,
+                // ),
                 // _buildSettingsItem(
                 //   context,
                 //   'Licenses',
@@ -152,17 +152,17 @@ class SettingsPage extends StatelessWidget {
 //   }
 // }
 
-class RateUsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Rate Us'),
-      ),
-      // Implement rate us UI
-    );
-  }
-}
+// class RateUsPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Rate Us'),
+//       ),
+//       // Implement rate us UI
+//     );
+//   }
+// }
 
 class LicensesPage extends StatelessWidget {
   @override
