@@ -36,16 +36,16 @@ class SettingsPage extends StatelessWidget {
                 //   context,
                 //   'Feedback',
                 //   'Give us your feedback',
-                //  // FeedbackPage(),
+                //   FeedbackPage(),
                 //   Icons.feedback,
                 // ),
-                // _buildSettingsItem(
-                //   context,
-                //   'Rate Us',
-                //   'Rate the app on the store',
-                //   RateUsPage(),
-                //   Icons.star,
-                // ),
+                _buildSettingsItem(
+                  context,
+                  'Rate Us',
+                  'Rate the app on the store',
+                  RateUsPage(),
+                  Icons.star,
+                ),
                 // _buildSettingsItem(
                 //   context,
                 //   'Licenses',
@@ -66,6 +66,13 @@ class SettingsPage extends StatelessWidget {
                   'Learn more about the app',
                   AboutPage(),
                   Icons.info,
+                ),
+                _buildSettingsItem(
+                  context,
+                  'Privacy policy',
+                  'Privacy Policy of our application',
+                  PrivacyPage(),
+                  Icons.privacy_tip,
                 ),
               ],
             ),
@@ -152,17 +159,17 @@ class SettingsPage extends StatelessWidget {
 //   }
 // }
 
-// class RateUsPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Rate Us'),
-//       ),
-//       // Implement rate us UI
-//     );
-//   }
-// }
+class RateUsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Rate Us'),
+      ),
+      // Implement rate us UI
+    );
+  }
+}
 
 class LicensesPage extends StatelessWidget {
   @override
@@ -222,7 +229,7 @@ class TermsOfServicePage extends StatelessWidget {
               ),
             ),
             Text(
-              'Users do not need to grant any permissions to access or use the FinCal application. We do not require access to any personal information or data on your device.\n',
+              'You do not need to grant any permissions to access or use the FinCal application. We do not require access to any personal information or data on your device.\n',
               style: TextStyle(
                 fontSize: 16.0,
               ),
@@ -235,63 +242,51 @@ class TermsOfServicePage extends StatelessWidget {
               ),
             ),
             Text(
-              'The calculations provided by the App are for informational purposes only and should not be considered financial advice. ZingTek Innovations does not guarantee the accuracy, reliability, or completeness of any calculation results obtained through the App. Users are advised to consult with qualified professionals for financial advice and decision-making.\n',
+              'The calculations provided by the App are for informational purposes only and should not be considered financial advice. Users are advised to consult with qualified professionals for financial advice and decision-making.\n',
               style: TextStyle(
                 fontSize: 16.0,
               ),
             ),
+            // Text(
+            //   'Intellectual Property:\n',
+            //   style: TextStyle(
+            //     fontSize: 18.0,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
+            // Text(
+            //   'The FinCal application, including its content, design, and functionality, is the property of ZingTek Innovations and is protected by international copyright laws. Unauthorized use, reproduction, or distribution of the App is prohibited.\n',
+            //   style: TextStyle(
+            //     fontSize: 16.0,
+            //   ),
+            // ),
+
             Text(
-              'Intellectual Property:\n',
+              'Changes to our Terms of service:\n',
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              'The FinCal application, including its content, design, and functionality, is the property of ZingTek Innovations and is protected by international copyright laws. Unauthorized use, reproduction, or distribution of the App is prohibited.\n',
+              'If we decide to change our terms and service, we will post those changes on this page and in our application.This policy was last modified on 27th June2024.\n',
               style: TextStyle(
                 fontSize: 16.0,
               ),
             ),
-            Text(
-              'Limitation of Liability:\n',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              'ZingTek Innovations shall not be liable for any direct, indirect, incidental, special, consequential, or exemplary damages arising out of the use or inability to use the App.\n',
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
-            Text(
-              'Changes to Terms:\n',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              'We reserve the right to modify these Terms at any time without prior notice. It is your responsibility to review these Terms periodically for any changes. Your continued use of the App after the posting of changes constitutes your acceptance of such changes.\n',
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
-            Text(
-              'Termination:\n',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              'ZingTek Innovations reserves the right to terminate or suspend access to the App at any time without prior notice or liability.\n',
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
+            // Text(
+            //   'Termination:\n',
+            //   style: TextStyle(
+            //     fontSize: 18.0,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
+            // Text(
+            //   'ZingTek Innovations reserves the right to terminate or suspend access to the App at any time without prior notice or liability.\n',
+            //   style: TextStyle(
+            //     fontSize: 16.0,
+            //   ),
+            // ),
             Text(
               'Contact Us:\n',
               style: TextStyle(
@@ -413,6 +408,192 @@ class AboutPage extends StatelessWidget {
             ),
             Text(
               'Thank you for choosing the FinCal application for your financial needs!',
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PrivacyPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Privacy Policy'),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Privacy Policy\n',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'Welcome to the FinCal mobile application provided by ZingTek Innovations. By downloading, installing, or using this application, you agree to abide by the following privacy policy:\n',
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+            Text(
+              'What do we collect :\n',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'We never collect any user information apart from the inputs for calculation. Our aim is to help you with your personal finances by providing you with valuable content related to personal finance so that you can manage your finances easily and without any stress. we will not use or share your information with anyone except as described in this Privacy Policy.\n',
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+            Text(
+              'Do we transfer any information to outside parties?\n',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'Since we do not collect any user information directly or indirectly, we do not have any user information to share with others. You just enter numeric values as an input to perform a calculation.\n',
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+            Text(
+              'Third party links :\n',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'Occasionally, at our discretion, we may include or offer third-party products or services on our app via ads (Admob). These third-party sites have separate and independent privacy policies. We, therefore, have no responsibility or liability for the content and activities of these linked sites. Please read the privacy policy of Admob by using this link. https://support.google.com/admob/answer/6128543?hl=en\n',
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+            // Text(
+            //   'Intellectual Property:\n',
+            //   style: TextStyle(
+            //     fontSize: 18.0,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
+            // Text(
+            //   'The FinCal application, including its content, design, and functionality, is the property of ZingTek Innovations and is protected by international copyright laws. Unauthorized use, reproduction, or distribution of the App is prohibited.\n',
+            //   style: TextStyle(
+            //     fontSize: 16.0,
+            //   ),
+            // ),
+
+            Text(
+              'Storage:\n',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'We store all the calculated data in the local database sqlite in your device. This application does not transfer any information to other networked systems. The data that we get in input will be stored with a result value.\n',
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+
+            Text(
+              'Deletion of Data : \n',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'The Numeric value that we get from the user to perform a calculation will be stored only in the local database inside your mobile. The user will be able to delete the data which is stored in your devices local database by deleting the history page in the application or  by uninstalling the application the whole data will be deleted from your device.\n',
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+
+            Text(
+              'Do we use cookies?\n',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'No, We do not use cookies.\n',
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+
+            Text(
+              'Do we sell your data?\n',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'No, we never sold your data. The data which we collect will only be stored in the local database sqlite that is stored only in your mobile device. We never able to read, edit or access the data which is stored in your device local database. \n',
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+
+            Text(
+              'Changes to our Privacy Policy:\n',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'If we decide to change our terms and service, we will post those changes on this page and in our application.This policy was last modified on 27th June2024.\n',
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+            // Text(
+            //   'Termination:\n',
+            //   style: TextStyle(
+            //     fontSize: 18.0,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
+            // Text(
+            //   'ZingTek Innovations reserves the right to terminate or suspend access to the App at any time without prior notice or liability.\n',
+            //   style: TextStyle(
+            //     fontSize: 16.0,
+            //   ),
+            // ),
+            Text(
+              'Contact Us:\n',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'If you have any questions or concerns about these Terms, please contact us at zingtekinnovations@gmail.com\n',
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+            Text(
+              'By using the FinCal application, you acknowledge that you have read, understood, and agree to be bound by these privacy policy.',
               style: TextStyle(
                 fontSize: 16.0,
               ),
